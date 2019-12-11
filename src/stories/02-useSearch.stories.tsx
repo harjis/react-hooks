@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import useSearch from '../hooks/useSearch';
+import useSearch from '../hooks/useSearch';
 
 const posts = [
   { id: 1, name: 'My favorite post' },
@@ -15,7 +15,17 @@ export default {
 };
 
 export const UseSearch = () => {
-  return <div>Show input field and and a list here</div>;
+  const { filteredItems, onSearch } = useSearch(posts, 'name');
+  return (
+    <div>
+      <input type="text" onChange={event => onSearch(event.currentTarget.value)} />
+      <ul>
+        {filteredItems.map(post => (
+          <li key={post.id}>{post.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 UseSearch.story = {

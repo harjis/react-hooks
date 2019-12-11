@@ -1,0 +1,15 @@
+.hoverYes {
+  display: none;
+}
+
+.hoverNo {
+  display: inline;
+}
+
+.container:hover .hoverYes {
+  display: inline;
+}
+
+.container:hover .hoverNo {
+  display: none;
+}
