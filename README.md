@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Solutions branch contains all the solutions for the tasks
 
 
 * We are already using this: https://reactjs.org/docs/hooks-rules.html
