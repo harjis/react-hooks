@@ -18,6 +18,7 @@ export default function useFetch<T>(query: Query<T>, initialState: T): ReturnTyp
     let subscription = new Subscription();
     const fetchData = (): void => {
       subscription = query().subscribe(_data => {
+        console.log('subscrbie');
         setData(_data);
         setLoading(LoadingState.LOADED);
       });
@@ -25,6 +26,7 @@ export default function useFetch<T>(query: Query<T>, initialState: T): ReturnTyp
 
     fetchData();
     return (): void => {
+      console.log('unsubcsc');
       subscription.unsubscribe();
     };
   }, [query]);

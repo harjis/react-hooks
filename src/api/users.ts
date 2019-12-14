@@ -9,5 +9,12 @@ export const getUsers = () => ky.get('https://jsonplaceholder.typicode.com/users
 
 export const getUsersObservable = () => {
   const promise = ky.get('https://jsonplaceholder.typicode.com/users').json<User[]>();
+  // For testing
+  // const promise: Promise<User[]> = new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve([ { id: 1, name: 'test' } ])
+  //   }, 1000);
+  // });
+
   return from(promise);
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import useFetch, { LoadingState } from '../hooks/useFetch';
-import { getUsers } from '../api/users';
+import useFetchObservable, {LoadingState} from "../hooks/useFetchObservable";
+import { getUsersObservable } from '../api/users';
 
 // https://jsonplaceholder.typicode.com/users
 
@@ -10,7 +10,7 @@ export default {
 };
 
 export const UseFetch = () => {
-  const { data: users, error, loadingState } = useFetch(getUsers, []);
+  const { data: users, error, loadingState } = useFetchObservable(getUsersObservable, []);
   if (loadingState === LoadingState.NOT_LOADED) {
     return <div>Not loaded</div>;
   } else if (loadingState === LoadingState.LOADING) {
