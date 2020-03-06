@@ -1,15 +1,16 @@
 import React from "react";
 
 import useResizeObserver from "../hooks/useResizeObserver";
+import useHover2 from "./06-useHoverImplementation";
 
 export default {
-  title: "ResizeObserver"
+  title: "ResizeObserver & Hover 2"
 };
 
-export const UseResizeObserver = () => {
+export const UseResizeObserverAndHover = () => {
   const [size, setSize] = React.useState({ height: 100, width: 100 });
   const [ref, dimensions] = useResizeObserver<HTMLDivElement>();
-  const [ref2, dimensions2] = useResizeObserver<HTMLDivElement>();
+  const [, isHovering] = useHover2(ref);
   return (
     <div>
       <button
@@ -23,14 +24,10 @@ export const UseResizeObserver = () => {
         Increase div size
       </button>
       <div style={{ height: size.height, width: size.width }} ref={ref}>
-        height: {dimensions.height} width: {dimensions.width}
-      </div>
-
-      <div style={{ height: 200, width: 250 }} ref={ref2}>
-        height: {dimensions2.height} width: {dimensions2.width}
+        height: {dimensions.height} width: {dimensions.width} isHovering: {isHovering.toString()}
       </div>
     </div>
   );
 };
 
-UseResizeObserver.story = { name: "useResizeObserver" };
+UseResizeObserverAndHover.story = { name: "useResizeObserver & useHover" };
