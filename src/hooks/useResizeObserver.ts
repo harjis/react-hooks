@@ -13,6 +13,7 @@ const useResizeObserver = <ElementType extends Element>(): ReturnType<
   const ref = React.useRef<ElementType>(null);
 
   React.useEffect(() => {
+    const { current } = ref;
     const observer = new ResizeObserver(([element]) => {
       // https://alligator.io/js/resize-observer/
       // Unlike with an element’s getBoundingClientRect, contentRect’s values for width and height don’t
@@ -24,12 +25,12 @@ const useResizeObserver = <ElementType extends Element>(): ReturnType<
       setDimensions({ height, width });
     });
 
-    if (ref.current) observer.observe(ref.current);
+    if (current) observer.observe(current);
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (current) observer.unobserve(current);
     };
-  });
+  }, [ref]);
 
   return [ref, dimensions];
 };

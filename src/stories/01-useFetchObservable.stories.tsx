@@ -10,7 +10,7 @@ export default {
 };
 
 export const UseFetch = () => {
-  const { data: users, error, loadingState } = useFetchObservable(getUsersObservable, []);
+  const { data: users, loadingState } = useFetchObservable(getUsersObservable, []);
   if (loadingState === LoadingState.NOT_LOADED) {
     return <div>Not loaded</div>;
   } else if (loadingState === LoadingState.LOADING) {

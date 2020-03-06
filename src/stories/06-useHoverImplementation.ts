@@ -23,7 +23,7 @@ const useHover2 = <ElementType>(
         node.removeEventListener("mouseleave", handleMouseOut);
       };
     }
-  }, []);
+  }, [ref]);
 
   return [ref, value];
 };

@@ -20,7 +20,7 @@ const useHover = <ElementType>(): ReturnType<ElementType> => {
         node.removeEventListener("mouseleave", handleMouseOut);
       };
     }
-  }, []);
+  }, [ref]);
 
   return [ref, value];
 };

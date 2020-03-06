@@ -12,7 +12,7 @@ type ReturnType<T> = { data: T; error: string; loadingState: LoadingState };
 export default function useFetch<T>(query: Query<T>, initialState: T): ReturnType<T> {
   const [loadingState, setLoading] = React.useState(LoadingState.NOT_LOADED);
   const [data, setData] = React.useState(initialState);
-  const [error, setError] = React.useState('');
+  const [error] = React.useState('');
 
   React.useEffect(() => {
     let subscription = new Subscription();
