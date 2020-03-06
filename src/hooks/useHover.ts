@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type ReturnType<ElementType> = [React.RefObject<ElementType>, boolean];
 const useHover = <ElementType>(): ReturnType<ElementType> => {
@@ -12,12 +12,12 @@ const useHover = <ElementType>(): ReturnType<ElementType> => {
 
     const node = ref.current;
     if (node instanceof Element) {
-      node.addEventListener('mouseenter', handleMouseOver);
-      node.addEventListener('mouseleave', handleMouseOut);
+      node.addEventListener("mouseenter", handleMouseOver);
+      node.addEventListener("mouseleave", handleMouseOut);
 
       return (): void => {
-        node.removeEventListener('mouseenter', handleMouseOver);
-        node.removeEventListener('mouseleave', handleMouseOut);
+        node.removeEventListener("mouseenter", handleMouseOver);
+        node.removeEventListener("mouseleave", handleMouseOut);
       };
     }
   }, []);

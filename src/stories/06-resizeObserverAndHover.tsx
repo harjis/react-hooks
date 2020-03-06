@@ -10,7 +10,7 @@ export default {
 export const UseResizeObserverAndHover = () => {
   const [size, setSize] = React.useState({ height: 100, width: 100 });
   const [ref, dimensions] = useResizeObserver<HTMLDivElement>();
-  const [ref2, isHovering] = useHover();
+  const [ref2, isHovering] = useHover<HTMLDivElement>();
   return (
     <div>
       <button
@@ -23,8 +23,12 @@ export const UseResizeObserverAndHover = () => {
       >
         Increase div size
       </button>
-      <div style={{ height: size.height, width: size.width }} ref={mergeRefs([ref, ref2])}>
-        height: {dimensions.height} width: {dimensions.width} isHovering: {isHovering.toString()}
+      <div
+        style={{ height: size.height, width: size.width }}
+        ref={mergeRefs([ref, ref2])}
+      >
+        height: {dimensions.height} width: {dimensions.width} isHovering:{" "}
+        {isHovering.toString()}
       </div>
     </div>
   );
@@ -32,10 +36,10 @@ export const UseResizeObserverAndHover = () => {
 
 UseResizeObserverAndHover.story = { name: "useResizeObserver & useHover" };
 
-function mergeRefs<ElementType>(refs: React.MutableRefObject<any>[]) {
+function mergeRefs<ElementType>(refs: React.MutableRefObject<ElementType>[]) {
   return (instance: ElementType) => {
     refs.forEach(ref => {
-      ref.current = instance
-    })
-  }
+      ref.current = instance;
+    });
+  };
 }

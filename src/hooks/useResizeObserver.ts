@@ -6,9 +6,9 @@ type Dimensions = {
   width: number;
 };
 type ReturnType<ElementType> = [React.RefObject<ElementType>, Dimensions];
-const useResizeObserver = <
-  ElementType extends Element
->(): ReturnType<ElementType> => {
+const useResizeObserver = <ElementType extends Element>(): ReturnType<
+  ElementType
+> => {
   const [dimensions, setDimensions] = React.useState({ height: 0, width: 0 });
   const ref = React.useRef<ElementType>(null);
 
