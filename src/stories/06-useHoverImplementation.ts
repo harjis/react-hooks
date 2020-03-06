@@ -1,6 +1,5 @@
 import React from "react";
 
-// I don't understand why I can't explicitly type the return value like in other useHover
 type ReturnType<ElementType> = [React.RefObject<ElementType>, boolean];
 const useHover2 = <ElementType>(
   externalRef?: React.RefObject<ElementType>
