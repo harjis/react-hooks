@@ -10,7 +10,12 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint": "^7.8.1",
+    "eslint-plugin-react-hooks": "^4.1.0",
     "ky": "^0.16.1",
+    "prettier": "^2.1.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.3.0",
@@ -25,7 +30,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "ts": "tsc --pretty --noEmit"
+    "ts": "tsc --pretty --noEmit",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "eslintConfig": {
     "extends": "react-app"

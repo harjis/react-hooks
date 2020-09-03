@@ -6,7 +6,7 @@ const useHover2 = <ElementType>(
 ): ReturnType<ElementType> => {
   const [value, setValue] = React.useState(false);
 
-  let internalRef = React.useRef<ElementType>(null);
+  const internalRef = React.useRef<ElementType>(null);
   const ref = externalRef === undefined ? internalRef : externalRef;
 
   React.useEffect(() => {

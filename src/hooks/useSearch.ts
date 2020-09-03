@@ -1,7 +1,10 @@
-import React from 'react';
+import React from "react";
 
 type ReturnType<T> = { filteredItems: T[]; onSearch: (value: string) => void };
-export default function useSearch<T extends {}>(items: T[], key: keyof T): ReturnType<T> {
+export default function useSearch<T extends Record<string, unknown>>(
+  items: T[],
+  key: keyof T
+): ReturnType<T> {
   const [filteredItems, setFilteredItems] = React.useState(items);
   React.useEffect(() => {
     setFilteredItems(items);
@@ -13,7 +16,7 @@ export default function useSearch<T extends {}>(items: T[], key: keyof T): Retur
     items.reduce<T[]>((acc, filteredItem) => {
       const filteredItemValue = filteredItem[key];
       if (
-        typeof filteredItemValue === 'string' &&
+        typeof filteredItemValue === "string" &&
         filteredItemValue.toLocaleLowerCase().includes(value.toLowerCase())
       ) {
         return [...acc, filteredItem];
@@ -23,7 +26,7 @@ export default function useSearch<T extends {}>(items: T[], key: keyof T): Retur
     }, []);
 
   const onSearch = (value: string): void => {
-    if (value === '') return resetSearch();
+    if (value === "") return resetSearch();
     setFilteredItems(doSearch(value));
   };
 

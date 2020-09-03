@@ -1,20 +1,17 @@
-import ky from 'ky';
-import { from } from 'rxjs';
+import ky from "ky";
+import { Observable, from } from "rxjs";
 
-type User = {
+export type User = {
   id: number;
   name: string;
 };
-export const getUsers = () => ky.get('https://jsonplaceholder.typicode.com/users').json<User[]>();
+export const getUsers = (): Promise<User[]> =>
+  ky.get("https://jsonplaceholder.typicode.com/users").json<User[]>();
 
-export const getUsersObservable = () => {
-  const promise = ky.get('https://jsonplaceholder.typicode.com/users').json<User[]>();
-  // For testing
-  // const promise: Promise<User[]> = new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     resolve([ { id: 1, name: 'test' } ])
-  //   }, 1000);
-  // });
+export const getUsersObservable = (): Observable<User[]> =>
+  from(ky.get("https://jsonplaceholder.typicode.com/users").json<User[]>());
 
-  return from(promise);
-};
+export const getUserObservable = (userId: number): Observable<User> =>
+  from(
+    ky.get(`https://jsonplaceholder.typicode.com/users/${userId}`).json<User>()
+  );

@@ -6,7 +6,7 @@ export enum LoadingState {
   LOADED
 }
 
-type Query<T> = (...args: any[]) => Promise<T>;
+type Query<T> = () => Promise<T>;
 type ReturnType<T> = { data: T; error: string; loadingState: LoadingState };
 export default function useFetch<T>(query: Query<T>, initialState: T): ReturnType<T> {
   const [loadingState, setLoading] = React.useState(LoadingState.NOT_LOADED);
