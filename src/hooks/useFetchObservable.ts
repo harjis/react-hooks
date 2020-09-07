@@ -1,5 +1,5 @@
 import React from "react";
-import { Observable, Subscription } from "rxjs";
+import { Observable } from "rxjs";
 
 export enum LoadingState {
   NOT_LOADED,
@@ -18,15 +18,11 @@ export default function useFetchObservable<T>(
   const [error] = React.useState("");
 
   React.useEffect(() => {
-    let subscription = new Subscription();
-    const fetchData = (): void => {
-      subscription = query().subscribe((_data) => {
-        setData(_data);
-        setLoading(LoadingState.LOADED);
-      });
-    };
+    const subscription = query().subscribe((_data) => {
+      setData(_data);
+      setLoading(LoadingState.LOADED);
+    });
 
-    fetchData();
     return (): void => {
       subscription.unsubscribe();
     };
