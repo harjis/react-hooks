@@ -4,6 +4,7 @@ import { Observable, from } from "rxjs";
 export type User = {
   id: number;
   name: string;
+  age: number;
 };
 export const getUsers = (): Promise<User[]> =>
   ky.get("https://jsonplaceholder.typicode.com/users").json<User[]>();
