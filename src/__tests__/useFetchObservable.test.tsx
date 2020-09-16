@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { from, Observable, Subject, Subscription } from "rxjs";
+import { from, Observable } from "rxjs";
 
 import useFetchObservable, { LoadingState } from "../hooks/useFetchObservable";
 
