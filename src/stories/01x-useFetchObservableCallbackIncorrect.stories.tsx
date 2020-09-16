@@ -63,8 +63,15 @@ export const UseFetch = () => {
               }}
               key={user.id}
               onClick={() => {
-                setSelectedUser(user.id);
-                fetch(() => getUsersObservable(user.id));
+                const subs = fetch(() => getUsersObservable(user.id));
+                setSelectedUser((prevState) => {
+                  console.log(prevState, user.id);
+                  if (prevState !== user.id) {
+                    // Doesn't work
+                    subs.unsubscribe();
+                  }
+                  return user.id;
+                });
               }}
             >
               {user.name}

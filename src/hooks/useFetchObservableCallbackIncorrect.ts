@@ -12,7 +12,7 @@ type ReturnType<T> = {
   data: T;
   error: string;
   loadingState: LoadingState;
-  fetch: (query: Query<T>) => void;
+  fetch: (query: Query<T>) => Subscription;
 };
 export default function useFetchObservableCallback<T>(
   initialState: T
