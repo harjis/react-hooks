@@ -27,7 +27,9 @@ export default function useFetchObservableCallback<T>(
     return (): void => {
       subscription.current.unsubscribe();
     };
-  }, [subscription]);
+    // Maybe this is more clear without subscription as a dep since the dependency doesn't actually do anything
+    // This effects cleanup is done only on unmount. Conscutive calls unsubscriptions on fetch are handled by fetch it self
+  }, []);
 
   const fetch = useCallback(() => {
     subscription.current.unsubscribe();
