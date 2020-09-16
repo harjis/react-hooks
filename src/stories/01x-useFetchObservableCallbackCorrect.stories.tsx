@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { User } from "../api/users";
 import useFetchObservableCallback, {
@@ -12,9 +12,9 @@ export default {
 
 type UsersComponentProps = { users: User[]; loadingState: LoadingState };
 const UsersComponent: React.FC<UsersComponentProps> = ({
-                                                         users,
-                                                         loadingState,
-                                                       }) => {
+  users,
+  loadingState,
+}) => {
   if (loadingState === LoadingState.NOT_LOADED) {
     return <div>Not loaded</div>;
   } else if (loadingState === LoadingState.LOADING) {
@@ -29,19 +29,24 @@ const UsersComponent: React.FC<UsersComponentProps> = ({
     );
 };
 export const UseFetch = () => {
+  const [wat, setWat] = useState(100);
   const [userId, setUserId] = useState(1);
-  const { data: users, loadingState, fetch } = useFetchObservableCallback<
-    User[]
-    >([]);
+  const { data: users, loadingState, fetch } = useFetchObservableCallback(
+    useCallback(() => getUsersObservable(userId), [userId]),
+    []
+  );
 
   return (
     <div>
+      <button onClick={() => setWat((prevState) => prevState + 1)}>
+        Increment {wat}
+      </button>
       <button onClick={() => setUserId((prevState) => prevState + 1)}>
         Increment {userId}
       </button>
       <button
         onClick={() => {
-          fetch(() => getUsersObservable(userId));
+          fetch();
         }}
       >
         Click to fetch
