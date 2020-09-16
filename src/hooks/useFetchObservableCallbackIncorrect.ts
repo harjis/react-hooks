@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Observable, Subscription } from "rxjs";
 
 export enum LoadingState {
@@ -20,21 +20,32 @@ export default function useFetchObservableCallback<T>(
   const [loadingState, setLoading] = React.useState(LoadingState.NOT_LOADED);
   const [data, setData] = React.useState(initialState);
   const [error] = React.useState("");
-  const ref = useRef<Subscription | undefined>();
+  const subscriptionRefs = useRef<Subscription[]>([]);
 
-  React.useEffect(() => {
-    return (): void => {
-      console.log("in unsub");
-      ref.current && ref.current.unsubscribe();
-    };
+  useEffect(() => {
+    return () =>
+      subscriptionRefs.current &&
+      subscriptionRefs.current.forEach((subscription) =>
+        subscription.unsubscribe()
+      );
   }, []);
 
   const fetch = (query: Query<T>) => {
-    ref.current = query().subscribe((_data) => {
-      console.log('resolved data', _data);
-      setData(_data);
-      setLoading(LoadingState.LOADED);
-    });
+    const subscription = query()
+      .subscribe((_data) => {
+        console.log("resolved data", _data);
+        setData(_data);
+        setLoading(LoadingState.LOADED);
+      })
+      .add(() => {
+        // Whether it's a data or error or even unsubscribe outside of the hook, add will be called.
+        // Remove this subscription from current active subscriptions.
+        subscriptionRefs.current = subscriptionRefs.current.filter(
+          (s) => s !== subscription
+        );
+      });
+    subscriptionRefs.current.push(subscription);
+    return subscription;
   };
   return { data, error, loadingState, fetch };
 }
