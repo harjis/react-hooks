@@ -21,19 +21,23 @@ export default function useFetchObservableCallback<T>(
   const [loadingState, setLoading] = React.useState(LoadingState.NOT_LOADED);
   const [data, setData] = React.useState(initialState);
   const [error] = React.useState("");
-  let subscription = new Subscription();
+  const subscription = useRef(new Subscription());
 
   React.useEffect(() => {
     return (): void => {
-      subscription.unsubscribe();
+      subscription.current.unsubscribe();
     };
   }, [subscription]);
 
   const fetch = useCallback(() => {
-    subscription = query().subscribe((_data) => {
-      setData(_data);
-      setLoading(LoadingState.LOADED);
-    });
+    subscription.current.unsubscribe();
+    subscription.current = new Subscription();
+    subscription.current.add(
+      query().subscribe((_data) => {
+        setData(_data);
+        setLoading(LoadingState.LOADED);
+      })
+    );
   }, [query]);
   return { data, error, loadingState, fetch };
 }

@@ -31,10 +31,9 @@ const UsersComponent: React.FC<UsersComponentProps> = ({
 export const UseFetch = () => {
   const [wat, setWat] = useState(100);
   const [userId, setUserId] = useState(1);
-  const { data: users, loadingState, fetch } = useFetchObservableCallback(
-    useCallback(() => getUsersObservable(userId), [userId]),
-    []
-  );
+  const { data: users, loadingState, fetch } = useFetchObservableCallback<
+    User[]
+  >([]);
 
   return (
     <div>
@@ -46,7 +45,7 @@ export const UseFetch = () => {
       </button>
       <button
         onClick={() => {
-          fetch();
+          fetch(() => getUsersObservable(userId));
         }}
       >
         Click to fetch

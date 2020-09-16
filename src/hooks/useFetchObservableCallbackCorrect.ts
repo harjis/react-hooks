@@ -12,10 +12,9 @@ type ReturnType<T> = {
   data: T;
   error: string;
   loadingState: LoadingState;
-  fetch: () => void;
+  fetch: (query: Query<T>) => void;
 };
 export default function useFetchObservableCallback<T>(
-  query: Query<T>,
   initialState: T
 ): ReturnType<T> {
   const [loadingState, setLoading] = React.useState(LoadingState.NOT_LOADED);
@@ -30,7 +29,7 @@ export default function useFetchObservableCallback<T>(
     };
   }, [subscription]);
 
-  const fetch = useCallback(() => {
+  const fetch = (query: Query<T>) => {
     subscription.current.unsubscribe();
     subscription.current = new Subscription();
     subscription.current.add(
@@ -40,6 +39,6 @@ export default function useFetchObservableCallback<T>(
         setLoading(LoadingState.LOADED);
       })
     );
-  }, [query]);
+  };
   return { data, error, loadingState, fetch };
 }
