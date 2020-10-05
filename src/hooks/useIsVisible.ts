@@ -20,7 +20,7 @@ export const useIsVisible = <
   onVisibilityChange: (
     element: RefElement,
     visibilityRatio: number,
-    isAbove: boolean
+    isIntersectingFromAbove: boolean
   ) => void
 ): [RefCallback<RefElement>] => {
   // | null is needed because we own the ref.
@@ -33,28 +33,43 @@ export const useIsVisible = <
     };
   }, []);
 
+  // Do I need to assign currentScrollRef in a variable? If I didn't, I guess it wouldn't handle
+  // cases where scroll ref changed
+  const { current: currentScrollRef } = scrollRef;
   const observerCallback: RefCallback<RefElement> = useCallback(
     (node) => {
       if (node) {
         observerRef.current = new IntersectionObserver(
           (entries) => {
             if (entries.length) {
-              let _isAbove = false;
+              //  Documentation: https://www.w3.org/TR/intersection-observer/#dom-intersectionobserverentry-rootbounds
+              //  It states that rootBounds is a Rect if:
+              //    If target belongs to the same unit of related similar-origin browsing contexts
+              //    as the intersection root, this will be the root intersection rectangle.
+              //    Otherwise, this will be null.
+              //
+              //  I have no idea what this means but I guess in that case the element is not intersecting?
+              //  -> isIntersectingFromAbove = false
+              let isIntersectingFromAbove = false;
               if (entries[0].rootBounds) {
-                _isAbove =
+                isIntersectingFromAbove =
                   entries[0].boundingClientRect.y < entries[0].rootBounds.y;
               }
               observerRef.current && observerRef.current.unobserve(node);
-              onVisibilityChange(node, entries[0].intersectionRatio, _isAbove);
+              onVisibilityChange(
+                node,
+                entries[0].intersectionRatio,
+                isIntersectingFromAbove
+              );
             }
           },
-          { ...defaultIntersectionObserverInit, root: scrollRef.current }
+          { ...defaultIntersectionObserverInit, root: currentScrollRef }
         );
 
         observerRef.current.observe(node);
       }
     },
-    [onVisibilityChange, scrollRef]
+    [onVisibilityChange, currentScrollRef]
   );
   return [observerCallback];
 };

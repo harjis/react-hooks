@@ -54,11 +54,12 @@ export const Stepper = () => {
 function handleVisibilityChange<ElementType extends Element>(
   element: ElementType,
   visibilityRatio: number,
-  isAbove: boolean
+  isIntersectingFromAbove: boolean
 ): void {
-  if (visibilityRatio < 1 && element && isAbove) {
-    element.scrollIntoView();
-  } else if (visibilityRatio < 1 && element && !isAbove) {
+  if (visibilityRatio < 1 && element && isIntersectingFromAbove) {
+    // scrollIntoView(alignToTop)
+    element.scrollIntoView(true);
+  } else if (visibilityRatio < 1 && element && !isIntersectingFromAbove) {
     element.scrollIntoView(false);
   }
 }
