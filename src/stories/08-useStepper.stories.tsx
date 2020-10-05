@@ -13,8 +13,9 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [refCallback, isVisible, isAbove] = useIsVisible<HTMLDivElement>(
-    scrollRef
+  const [refCallback] = useIsVisible<HTMLDivElement>(
+    scrollRef,
+    handleVisibilityChange
   );
   return (
     <div
@@ -44,29 +45,22 @@ export const Stepper = () => {
         <div>Selected: {selectedItem}</div>
       </div>
       <div ref={scrollRef} style={{ height: 100, overflow: "scroll" }}>
-        <List
-          ref={handleScroll(refCallback, isVisible, isAbove)}
-          items={items}
-          selectedItem={selectedItem}
-        />
+        <List ref={refCallback} items={items} selectedItem={selectedItem} />
       </div>
     </div>
   );
 };
 
-function handleScroll<ElementType extends Element>(
-  refCallback: RefCallback<ElementType>,
-  isVisible: number,
+function handleVisibilityChange<ElementType extends Element>(
+  element: ElementType,
+  visibilityRatio: number,
   isAbove: boolean
-): RefCallback<ElementType> {
-  return (instance: ElementType | null) => {
-    if (isVisible < 1 && instance && isAbove) {
-      instance.scrollIntoView();
-    } else if (isVisible < 1 && instance && !isAbove) {
-      instance.scrollIntoView(false);
-    }
-    refCallback(instance);
-  };
+): void {
+  if (visibilityRatio < 1 && element && isAbove) {
+    element.scrollIntoView();
+  } else if (visibilityRatio < 1 && element && !isAbove) {
+    element.scrollIntoView(false);
+  }
 }
 
 Stepper.story = {

@@ -4,20 +4,22 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
 } from "react";
 
 const defaultIntersectionObserverInit: IntersectionObserverInit = {
   root: null,
   rootMargin: "0px",
-  threshold: Array.from({ length: 100 }, (v: undefined, i: number) => i * 0.01),
+  threshold: 1.0,
 };
 
 export const useIsVisible = <RefElement extends Element>(
-  scrollRef: MutableRefObject<RefElement | null>
-): [RefCallback<RefElement>, number, boolean] => {
-  const [isVisible, setIsVisible] = useState(0);
-  const [isAbove, setIsAbove] = useState(false);
+  scrollRef: MutableRefObject<RefElement | null>,
+  onVisibilityChange: (
+    element: RefElement,
+    visibilityRatio: number,
+    isAbove: boolean
+  ) => void
+): [RefCallback<RefElement>] => {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -32,14 +34,13 @@ export const useIsVisible = <RefElement extends Element>(
         observerRef.current = new IntersectionObserver(
           (entries) => {
             if (entries.length) {
-              let isAbove = false;
+              let _isAbove = false;
               if (entries[0].rootBounds) {
-                isAbove =
+                _isAbove =
                   entries[0].boundingClientRect.y < entries[0].rootBounds.y;
               }
-              console.log(isAbove);
-              setIsAbove(isAbove);
-              setIsVisible(entries[0].intersectionRatio);
+              observerRef.current && observerRef.current.unobserve(node);
+              onVisibilityChange(node, entries[0].intersectionRatio, _isAbove);
             }
           },
           { ...defaultIntersectionObserverInit, root: scrollRef.current }
@@ -48,7 +49,7 @@ export const useIsVisible = <RefElement extends Element>(
         observerRef.current.observe(node);
       }
     },
-    [scrollRef]
+    [onVisibilityChange, scrollRef]
   );
-  return [observerCallback, isVisible, isAbove];
+  return [observerCallback];
 };
