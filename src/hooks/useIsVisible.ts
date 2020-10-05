@@ -15,9 +15,9 @@ const defaultIntersectionObserverInit: IntersectionObserverInit = {
 
 export const useIsVisible = <RefElement extends Element>(
   scrollRef: MutableRefObject<RefElement | null>
-): [RefCallback<RefElement>, number] => {
+): [RefCallback<RefElement>, number, boolean] => {
   const [isVisible, setIsVisible] = useState(0);
-  const ref = useRef<RefElement | null>(null);
+  const [isAbove, setIsAbove] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -29,10 +29,16 @@ export const useIsVisible = <RefElement extends Element>(
   const observerCallback: RefCallback<RefElement> = useCallback(
     (node) => {
       if (node) {
-        console.log(node);
         observerRef.current = new IntersectionObserver(
           (entries) => {
             if (entries.length) {
+              let isAbove = false;
+              if (entries[0].rootBounds) {
+                isAbove =
+                  entries[0].boundingClientRect.y < entries[0].rootBounds.y;
+              }
+              console.log(isAbove);
+              setIsAbove(isAbove);
               setIsVisible(entries[0].intersectionRatio);
             }
           },
@@ -44,5 +50,5 @@ export const useIsVisible = <RefElement extends Element>(
     },
     [scrollRef]
   );
-  return [observerCallback, isVisible];
+  return [observerCallback, isVisible, isAbove];
 };

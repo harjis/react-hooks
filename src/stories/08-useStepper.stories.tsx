@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { RefCallback, useRef, useState } from "react";
 import List from "../components/List";
 import { useIsVisible } from "../hooks/useIsVisible";
 
@@ -13,8 +13,9 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [ref, isVisible] = useIsVisible<HTMLDivElement>(scrollRef);
-  console.log(isVisible);
+  const [refCallback, isVisible, isAbove] = useIsVisible<HTMLDivElement>(
+    scrollRef
+  );
   return (
     <div
       style={{
@@ -43,11 +44,30 @@ export const Stepper = () => {
         <div>Selected: {selectedItem}</div>
       </div>
       <div ref={scrollRef} style={{ height: 100, overflow: "scroll" }}>
-        <List ref={ref} items={items} selectedItem={selectedItem} />
+        <List
+          ref={handleScroll(refCallback, isVisible, isAbove)}
+          items={items}
+          selectedItem={selectedItem}
+        />
       </div>
     </div>
   );
 };
+
+function handleScroll<ElementType extends Element>(
+  refCallback: RefCallback<ElementType>,
+  isVisible: number,
+  isAbove: boolean
+): RefCallback<ElementType> {
+  return (instance: ElementType | null) => {
+    if (isVisible < 1 && instance && isAbove) {
+      instance.scrollIntoView();
+    } else if (isVisible < 1 && instance && !isAbove) {
+      instance.scrollIntoView(false);
+    }
+    refCallback(instance);
+  };
+}
 
 Stepper.story = {
   name: "component",
