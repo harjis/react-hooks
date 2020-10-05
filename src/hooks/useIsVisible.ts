@@ -33,9 +33,6 @@ export const useIsVisible = <
     };
   }, []);
 
-  // Do I need to assign currentScrollRef in a variable? If I didn't, I guess it wouldn't handle
-  // cases where scroll ref changed
-  const { current: currentScrollRef } = scrollRef;
   const observerCallback: RefCallback<RefElement> = useCallback(
     (node) => {
       if (node) {
@@ -63,13 +60,13 @@ export const useIsVisible = <
               );
             }
           },
-          { ...defaultIntersectionObserverInit, root: currentScrollRef }
+          { ...defaultIntersectionObserverInit, root: scrollRef.current }
         );
 
         observerRef.current.observe(node);
       }
     },
-    [onVisibilityChange, currentScrollRef]
+    [onVisibilityChange, scrollRef]
   );
   return [observerCallback];
 };
