@@ -12,14 +12,19 @@ const defaultIntersectionObserverInit: IntersectionObserverInit = {
   threshold: 1.0,
 };
 
-export const useIsVisible = <RefElement extends Element>(
-  scrollRef: MutableRefObject<RefElement | null>,
+export const useIsVisible = <
+  RefElement extends Element,
+  ScrollRefElement extends Element
+>(
+  scrollRef: MutableRefObject<ScrollRefElement | null>,
   onVisibilityChange: (
     element: RefElement,
     visibilityRatio: number,
     isAbove: boolean
   ) => void
 ): [RefCallback<RefElement>] => {
+  // | null is needed because we own the ref.
+  // More info here: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065#issuecomment-446425911
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
