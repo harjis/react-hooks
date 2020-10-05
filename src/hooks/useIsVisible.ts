@@ -36,6 +36,9 @@ export const useIsVisible = <
   const observerCallback: RefCallback<RefElement> = useCallback(
     (node) => {
       if (node) {
+        // Disconnect from the previous observer
+        observerRef.current && observerRef.current.disconnect();
+
         observerRef.current = new IntersectionObserver(
           (entries) => {
             if (entries.length) {
@@ -52,7 +55,6 @@ export const useIsVisible = <
                 isIntersectingFromAbove =
                   entries[0].boundingClientRect.y < entries[0].rootBounds.y;
               }
-              observerRef.current && observerRef.current.unobserve(node);
               onVisibilityChange(
                 node,
                 entries[0].intersectionRatio,
