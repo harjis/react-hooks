@@ -17,12 +17,21 @@ const Input = <Item extends BaseItem>() =>
         {props.items.map((item) => {
           if (item.id === props.selectedItem) {
             return (
-              <div ref={ref} style={{ background: "grey" }}>
+              <div
+                key={item.id}
+                data-id={item.id}
+                ref={ref}
+                style={{ background: "grey" }}
+              >
                 {item.name}
               </div>
             );
           } else {
-            return <div>{item.name}</div>;
+            return (
+              <div key={item.id} data-id={item.id}>
+                {item.name}
+              </div>
+            );
           }
         })}
       </div>
