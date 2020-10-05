@@ -10,7 +10,7 @@ type Props<Item> = {
 };
 
 // oof isn't there a better way?
-const Input = <Item extends BaseItem>() =>
+const List = <Item extends BaseItem>() =>
   React.forwardRef<HTMLDivElement, PropsWithChildren<Props<Item>>>(
     (props: PropsWithChildren<Props<Item>>, ref) => (
       <div>
@@ -37,5 +37,5 @@ const Input = <Item extends BaseItem>() =>
       </div>
     )
   );
-Input.displayName = "Input";
-export default Input();
+List.displayName = "List";
+export default List();
