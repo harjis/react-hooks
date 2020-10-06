@@ -35,10 +35,13 @@ export const useIsVisible = <
 
   const observerCallback: RefCallback<RefElement> = useCallback(
     (node) => {
+      // Disconnecting from the previous observer should happen outside of node check
+      // If it were inside it would work incorrectly Stepper story when:
+      //    1. Selected is initially 0. useIsVisible observes Item 0 div
+      //    2. User clicks minus-button so that Selected becomes -1
+      //    3. Since there is no such item node === null but we are still observing the last item
+      observerRef.current && observerRef.current.disconnect();
       if (node) {
-        // Disconnect from the previous observer
-        observerRef.current && observerRef.current.disconnect();
-
         observerRef.current = new IntersectionObserver(
           (entries) => {
             if (entries.length) {
