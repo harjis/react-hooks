@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { List, ListRowRenderer } from "react-virtualized";
+import { List } from "react-virtualized";
 
 const rowRenderer = <Item extends BaseItem>(
   item: Item,
