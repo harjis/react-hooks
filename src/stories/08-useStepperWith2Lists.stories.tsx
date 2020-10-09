@@ -14,7 +14,7 @@ export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const secondScrollRef = useRef<HTMLDivElement>(null);
-  const [refCallback] = useIsVisible<HTMLDivElement>(
+  const [refCallback] = useIsVisible<HTMLDivElement, HTMLDivElement>(
     scrollRef,
     (element, visibilityRatio, isAbove) =>
       handleVisibilityChange(
