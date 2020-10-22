@@ -1,16 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import useFetchObservable, {LoadingState} from "../hooks/useFetchObservable";
-import { getUsersObservable } from '../api/users';
+import useFetchObservable, { LoadingState } from "../hooks/useFetchObservable";
+import { getUsersObservable } from "../api/users";
 
 // https://jsonplaceholder.typicode.com/users
 
 export default {
-  title: 'Fetch with observable'
+  title: "Fetch with observable",
 };
 
 export const UseFetch = () => {
-  const { data: users, loadingState } = useFetchObservable(getUsersObservable, []);
+  const { data: users, loadingState } = useFetchObservable(
+    getUsersObservable,
+    []
+  );
   if (loadingState === LoadingState.NOT_LOADED) {
     return <div>Not loaded</div>;
   } else if (loadingState === LoadingState.LOADING) {
@@ -18,7 +21,7 @@ export const UseFetch = () => {
   } else
     return (
       <ul>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>{user.name}</li>
         ))}
       </ul>
@@ -26,5 +29,5 @@ export const UseFetch = () => {
 };
 
 UseFetch.story = {
-  name: 'useFetch with observable'
+  name: "useFetch with observable",
 };

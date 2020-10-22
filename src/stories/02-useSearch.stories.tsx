@@ -1,26 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import useSearch from '../hooks/useSearch';
+import useSearch from "../hooks/useSearch";
 
 const posts = [
-  { id: 1, name: 'My favorite post' },
-  { id: 2, name: 'My least favorite post' },
-  { id: 3, name: 'Not a post' },
-  { id: 4, name: 'Lets toast!' },
-  { id: 5, name: "I'm at the coast" }
+  { id: 1, name: "My favorite post" },
+  { id: 2, name: "My least favorite post" },
+  { id: 3, name: "Not a post" },
+  { id: 4, name: "Lets toast!" },
+  { id: 5, name: "I'm at the coast" },
 ];
 
 export default {
-  title: 'Search'
+  title: "Search",
 };
 
 export const UseSearch = () => {
-  const { filteredItems, onSearch } = useSearch(posts, 'name');
+  const { filteredItems, onSearch } = useSearch(posts, "name");
   return (
     <div>
-      <input type="text" onChange={event => onSearch(event.currentTarget.value)} />
+      <input
+        type="text"
+        onChange={(event) => onSearch(event.currentTarget.value)}
+      />
       <ul>
-        {filteredItems.map(post => (
+        {filteredItems.map((post) => (
           <li key={post.id}>{post.name}</li>
         ))}
       </ul>
@@ -29,5 +32,5 @@ export const UseSearch = () => {
 };
 
 UseSearch.story = {
-  name: 'useSearch'
+  name: "useSearch",
 };

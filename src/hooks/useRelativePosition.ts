@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type State = {
   x: number;
@@ -22,6 +22,6 @@ function getRelativePosition(event: React.MouseEvent) {
   const rect = event.currentTarget.getBoundingClientRect();
   return {
     x: event.clientX - rect.left,
-    y: event.clientY - rect.top
+    y: event.clientY - rect.top,
   };
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type State = {
   x: number;
@@ -15,9 +15,9 @@ export default function useWindowPosition(): State {
       setState(coordinates);
     };
 
-    window.addEventListener('mousemove', onMove);
+    window.addEventListener("mousemove", onMove);
     return (): void => {
-      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener("mousemove", onMove);
     };
   }, []);
 

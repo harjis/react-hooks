@@ -3,7 +3,7 @@ import React from "react";
 import useResizeObserver from "../hooks/useResizeObserver";
 
 export default {
-  title: "ResizeObserver"
+  title: "ResizeObserver",
 };
 
 export const UseResizeObserver = () => {
@@ -14,9 +14,9 @@ export const UseResizeObserver = () => {
     <div>
       <button
         onClick={() => {
-          setSize(prevState => ({
+          setSize((prevState) => ({
             height: prevState.height + 100,
-            width: prevState.width + 100
+            width: prevState.width + 100,
           }));
         }}
       >

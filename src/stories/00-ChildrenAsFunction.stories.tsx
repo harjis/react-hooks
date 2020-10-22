@@ -3,7 +3,7 @@ import React from "react";
 import Counter from "../components/Counter";
 
 export default {
-  title: "Counter with Children as function"
+  title: "Counter with Children as function",
 };
 
 export const CounterWithComponent = () => {
@@ -23,5 +23,5 @@ export const CounterWithComponent = () => {
 };
 
 CounterWithComponent.story = {
-  name: "component"
+  name: "component",
 };

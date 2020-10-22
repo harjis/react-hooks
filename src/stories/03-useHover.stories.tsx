@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import useHover from '../hooks/useHover';
+import useHover from "../hooks/useHover";
 
 export default {
-  title: 'Hover'
+  title: "Hover",
 };
 
 export const UseHover = () => {
@@ -11,11 +11,11 @@ export const UseHover = () => {
   const [ref2, isHovering2] = useHover<SVGSVGElement>();
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div ref={ref1} style={{ border: '1px solid', height: 200, width: 200 }}>
+    <div style={{ display: "flex" }}>
+      <div ref={ref1} style={{ border: "1px solid", height: 200, width: 200 }}>
         Div: isHovering {`${isHovering1}`}
       </div>
-      <svg ref={ref2} style={{ border: '1px solid', height: 200, width: 200 }}>
+      <svg ref={ref2} style={{ border: "1px solid", height: 200, width: 200 }}>
         <text x={0} y={15}>
           Svg: isHovering {`${isHovering2}`}
         </text>
@@ -25,5 +25,5 @@ export const UseHover = () => {
 };
 
 UseHover.story = {
-  name: 'useHover'
+  name: "useHover",
 };

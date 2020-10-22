@@ -4,7 +4,7 @@ import useResizeObserver from "../hooks/useResizeObserver";
 import useHover from "../hooks/useHover";
 
 export default {
-  title: "ResizeObserver & Hover"
+  title: "ResizeObserver & Hover",
 };
 
 export const UseResizeObserverAndHover = () => {
@@ -15,9 +15,9 @@ export const UseResizeObserverAndHover = () => {
     <div>
       <button
         onClick={() => {
-          setSize(prevState => ({
+          setSize((prevState) => ({
             height: prevState.height + 100,
-            width: prevState.width + 100
+            width: prevState.width + 100,
           }));
         }}
       >
@@ -38,7 +38,7 @@ UseResizeObserverAndHover.story = { name: "useResizeObserver & useHover" };
 
 function mergeRefs<ElementType>(refs: React.MutableRefObject<ElementType>[]) {
   return (instance: ElementType) => {
-    refs.forEach(ref => {
+    refs.forEach((ref) => {
       ref.current = instance;
     });
   };

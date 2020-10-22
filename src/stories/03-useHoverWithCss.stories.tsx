@@ -1,20 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import './HoverWithCss.css';
+import "./HoverWithCss.css";
 
 export default {
-  title: 'Hover-with-css'
+  title: "Hover-with-css",
 };
 
 export const UseHoverWithCss = () => {
   return (
-    <div style={{ display: 'flex' }}>
-      <div className="container" style={{ border: '1px solid', height: 200, width: 200 }}>
+    <div style={{ display: "flex" }}>
+      <div
+        className="container"
+        style={{ border: "1px solid", height: 200, width: 200 }}
+      >
         Div: isHovering <span className="hoverYes">true</span>
         <span className="hoverNo">false</span>
       </div>
 
-      <svg className="container" style={{ border: '1px solid', height: 200, width: 200 }}>
+      <svg
+        className="container"
+        style={{ border: "1px solid", height: 200, width: 200 }}
+      >
         <text x={0} y={15}>
           Svg: isHovering
         </text>
@@ -30,5 +36,5 @@ export const UseHoverWithCss = () => {
 };
 
 UseHoverWithCss.story = {
-  name: 'with css'
+  name: "with css",
 };

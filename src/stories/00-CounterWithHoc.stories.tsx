@@ -3,7 +3,7 @@ import React from "react";
 import withCounter, { InjectedProps } from "../hocs/withCounter";
 
 export default {
-  title: "Counter with Hoc"
+  title: "Counter with Hoc",
 };
 
 const Counter = (props: InjectedProps) => {
@@ -27,5 +27,5 @@ export const CounterWithHocStory = () => {
 };
 
 CounterWithHocStory.story = {
-  name: "hoc"
+  name: "hoc",
 };

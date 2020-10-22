@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import useFetch, { LoadingState } from '../hooks/useFetch';
-import { getUsers } from '../api/users';
+import useFetch, { LoadingState } from "../hooks/useFetch";
+import { getUsers } from "../api/users";
 
 // https://jsonplaceholder.typicode.com/users
 
 export default {
-  title: 'Fetch'
+  title: "Fetch",
 };
 
 export const UseFetch = () => {
@@ -18,7 +18,7 @@ export const UseFetch = () => {
   } else
     return (
       <ul>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>{user.name}</li>
         ))}
       </ul>
@@ -26,5 +26,5 @@ export const UseFetch = () => {
 };
 
 UseFetch.story = {
-  name: 'useFetch'
+  name: "useFetch",
 };

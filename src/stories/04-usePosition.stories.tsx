@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import useWindowPosition from '../hooks/useWindowPosition';
-import useRelativePosition from '../hooks/useRelativePosition';
+import useWindowPosition from "../hooks/useWindowPosition";
+import useRelativePosition from "../hooks/useRelativePosition";
 
 export default {
-  title: 'Position'
+  title: "Position",
 };
 
 export const UsePosition = () => {
@@ -16,7 +16,7 @@ export const UsePosition = () => {
   );
 };
 
-UsePosition.story = { name: 'WindowPosition - Part 1' };
+UsePosition.story = { name: "WindowPosition - Part 1" };
 
 export const UsePosition2 = () => {
   const { state: htmlState, onMove: htmlOnMove } = useRelativePosition();
@@ -24,10 +24,16 @@ export const UsePosition2 = () => {
 
   return (
     <div>
-      <div style={{ border: '1px solid', height: 200, width: 200 }} onMouseMove={htmlOnMove}>
+      <div
+        style={{ border: "1px solid", height: 200, width: 200 }}
+        onMouseMove={htmlOnMove}
+      >
         x: {htmlState.x} y: {htmlState.y}
       </div>
-      <svg style={{ border: '1px solid', height: 200, width: 200 }} onMouseMove={svgOnMove}>
+      <svg
+        style={{ border: "1px solid", height: 200, width: 200 }}
+        onMouseMove={svgOnMove}
+      >
         <text x={0} y={20}>
           x: {svgState.x}
         </text>
@@ -39,4 +45,4 @@ export const UsePosition2 = () => {
   );
 };
 
-UsePosition2.story = { name: 'RelativePosition - Part 2' };
+UsePosition2.story = { name: "RelativePosition - Part 2" };
