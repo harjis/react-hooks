@@ -8,7 +8,6 @@ import {
   searchWithPostsContextCreator,
 } from "../features/PostsWithSearch";
 import { getPosts } from "../features/PostsWithSearch/api/posts";
-import { Post } from "../types";
 
 export default {
   title: "Search with context",
@@ -16,10 +15,7 @@ export default {
 
 export const UseSearch = () => {
   const { SearchProvider } = searchWithPostsContextCreator();
-  const { data: posts, error, loadingState } = useFetchObservable<Post[]>(
-    getPosts,
-    []
-  );
+  const { data: posts, error, loadingState } = useFetchObservable(getPosts, []);
   return (
     <SearchProvider items={posts} itemKey="name">
       <div

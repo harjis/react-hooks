@@ -7,7 +7,6 @@ import {
 import useFetchObservable from "../hooks/useFetchObservable";
 import { getPosts } from "../features/PostsWithSearch/api/posts";
 import Loading from "../components/Loading";
-import { Post } from "../types";
 
 export default {
   title: "Search with constate",
@@ -15,10 +14,7 @@ export default {
 
 export const UseSearch = () => {
   const { SearchProvider } = searchWithPostsConstateCreator();
-  const { data: posts, error, loadingState } = useFetchObservable<Post[]>(
-    getPosts,
-    []
-  );
+  const { data: posts, error, loadingState } = useFetchObservable(getPosts, []);
   return (
     <SearchProvider items={posts} itemKey="name">
       <div
