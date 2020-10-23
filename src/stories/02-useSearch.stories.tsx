@@ -1,6 +1,7 @@
 import React from "react";
 
 import useSearch from "../hooks/useSearch";
+import { BulletPointList, SearchInput } from "../components/Search";
 
 type Post = {
   id: number;
@@ -25,16 +26,11 @@ export const UseSearch = () => {
   });
   return (
     <div>
-      <input
-        type="text"
-        onChange={(event) => onSearch(event.currentTarget.value)}
-        value={search}
+      <SearchInput onSearch={onSearch} value={search} />
+      <BulletPointList
+        items={filteredItems}
+        itemRenderer={(item) => item.name}
       />
-      <ul>
-        {(filteredItems as Post[]).map((post) => (
-          <li key={post.id}>{post.name}</li>
-        ))}
-      </ul>
     </div>
   );
 };
