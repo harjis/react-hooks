@@ -1,1 +1,1 @@
-export { store, SearchProvider } from "./context";
+export { creator } from "./context";

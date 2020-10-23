@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { store } from "../../hooks/useSearchContext";
+import React from "react";
 
 type Props = {
   onSearch: (search: string) => void;
@@ -15,9 +14,3 @@ export const SearchInput: React.FC<Props> = (props) => (
     value={props.value}
   />
 );
-
-export function SearchInputWithSearch() {
-  const { onSearch, search } = useContext(store);
-
-  return <SearchInput onSearch={onSearch} value={search} />;
-}

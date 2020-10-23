@@ -1,21 +1,23 @@
-import React, { createContext, PropsWithChildren } from "react";
+import React, { createContext } from "react";
 
-import useSearchContext, {
-  Props,
-  ReturnType,
-  initialState,
-} from "./useSearchContext";
+import useSearch, { Props, ReturnType, initialState } from "./useSearch";
 
-const store = createContext(initialState);
-const { Provider } = store;
+function createUseCtx<T>(context: React.Context<T>) {
+  return () => {
+    return React.useContext<T>(context);
+  };
+}
 
-const SearchProvider = <T extends Record<string, unknown>>(
-  props: PropsWithChildren<Props<T>>
-) => {
-  const { children, ...rest } = props;
-  const search = useSearchContext(rest);
-  // TODO fix this
-  return <Provider value={search}>{children}</Provider>;
-};
+export function creator<T>() {
+  const context = createContext<ReturnType<T>>(initialState);
+  const useSearchContext = createUseCtx(context);
 
-export { store, SearchProvider };
+  const SearchProvider: React.FC<Props<T>> = (props) => {
+    const { children, ...rest } = props;
+    const { Provider } = context;
+    const useSearchHook = useSearch(rest);
+    return <Provider value={useSearchHook}>{children}</Provider>;
+  };
+
+  return { SearchProvider, useSearchContext };
+}

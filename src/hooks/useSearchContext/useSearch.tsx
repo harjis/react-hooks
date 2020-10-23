@@ -16,7 +16,7 @@ export const initialState = {
   },
   search: "",
 };
-export default function useSearchContext<T extends Record<string, unknown>>({
+export default function useSearch<T>({
   items,
   itemKey,
 }: Props<T>): ReturnType<T> {

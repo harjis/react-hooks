@@ -1,16 +1,12 @@
 import React from "react";
 
-import { SearchProvider } from "../hooks/useSearchContext";
-
 import {
   BulletPointListWithSearch,
+  Post,
+  searchWithPostsContextCreator,
   SearchInputWithSearch,
-} from "../components/SearchWithContext";
+} from "../features/PostsWithSearch";
 
-type Post = {
-  id: number;
-  name: string;
-};
 const posts: Post[] = [
   { id: 1, name: "My favorite post" },
   { id: 2, name: "My least favorite post" },
@@ -24,6 +20,7 @@ export default {
 };
 
 export const UseSearch = () => {
+  const { SearchProvider } = searchWithPostsContextCreator();
   return (
     <SearchProvider items={posts} itemKey="name">
       <div>
