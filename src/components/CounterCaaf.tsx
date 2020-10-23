@@ -11,7 +11,7 @@ type Props = {
 type State = {
   counter: number;
 };
-export default class Counter extends React.Component<Props, State> {
+export default class CounterCaaf extends React.Component<Props, State> {
   state = {
     counter: 0,
   };

@@ -1,7 +1,6 @@
 import React from "react";
-import constate from "constate";
 
-type ReturnType = {
+export type ReturnType = {
   counter: number;
   inc: () => void;
   dec: () => void;
@@ -14,8 +13,3 @@ export default function useCounter(): ReturnType {
 
   return { counter, inc, dec };
 }
-
-// For 07-useCounterConstate
-const [CounterProvider, useCounterContext] = constate(useCounter);
-
-export { CounterProvider, useCounterContext };

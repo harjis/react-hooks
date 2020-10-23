@@ -1,14 +1,14 @@
 import React from "react";
 
-import { CounterProvider } from "../hooks/useCounterContext";
 import {
-  Counter,
-  DecButton,
-  IncButton,
-} from "../components/CounterWithContext";
+  CounterProvider,
+  CounterWithCounter,
+  DecButtonWithCounter,
+  IncButtonWithCounter,
+} from "../features/CounterWithConstate";
 
 export default {
-  title: "Counter hook using context",
+  title: "Counter hook using constate",
 };
 
 export const CounterWithHook = () => {
@@ -18,17 +18,17 @@ export const CounterWithHook = () => {
     >
       <div>
         <CounterProvider>
-          <IncButton />
-          <DecButton />
-          <Counter />
+          <IncButtonWithCounter />
+          <DecButtonWithCounter />
+          <CounterWithCounter />
         </CounterProvider>
       </div>
 
       <div>
         <CounterProvider>
-          <IncButton />
-          <DecButton />
-          <Counter />
+          <IncButtonWithCounter />
+          <DecButtonWithCounter />
+          <CounterWithCounter />
         </CounterProvider>
       </div>
     </div>
