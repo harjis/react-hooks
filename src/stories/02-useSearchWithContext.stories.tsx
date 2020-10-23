@@ -1,19 +1,14 @@
 import React from "react";
 
+import Loading from "../components/Loading";
+import useFetchObservable from "../hooks/useFetchObservable";
 import {
   BulletPointListWithSearch,
-  Post,
-  searchWithPostsContextCreator,
   SearchInputWithSearch,
+  searchWithPostsContextCreator,
 } from "../features/PostsWithSearch";
-
-const posts: Post[] = [
-  { id: 1, name: "My favorite post" },
-  { id: 2, name: "My least favorite post" },
-  { id: 3, name: "Not a post" },
-  { id: 4, name: "Lets toast!" },
-  { id: 5, name: "I'm at the coast" },
-];
+import { getPosts } from "../features/PostsWithSearch/api/posts";
+import { Post } from "../types";
 
 export default {
   title: "Search with context",
@@ -21,11 +16,26 @@ export default {
 
 export const UseSearch = () => {
   const { SearchProvider } = searchWithPostsContextCreator();
+  const { data: posts, error, loadingState } = useFetchObservable<Post[]>(
+    getPosts,
+    []
+  );
   return (
     <SearchProvider items={posts} itemKey="name">
-      <div>
-        <SearchInputWithSearch />
-        <BulletPointListWithSearch />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: 500,
+        }}
+      >
+        <div>
+          <SearchInputWithSearch />
+        </div>
+        <Loading loadingState={loadingState} error={error}>
+          <BulletPointListWithSearch />
+        </Loading>
       </div>
     </SearchProvider>
   );

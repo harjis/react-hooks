@@ -1,5 +1,5 @@
-import { Post } from "../types";
 import { creator } from "../../../hooks/useSearchContext";
+import { Post } from "../../../types";
 
 function createSearchWithPostsContext() {
   const { SearchProvider, useSearchContext } = creator<Post>();

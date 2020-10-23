@@ -1,7 +1,8 @@
 import React from "react";
 
-import useFetchObservable, { LoadingState } from "../hooks/useFetchObservable";
+import useFetchObservable from "../hooks/useFetchObservable";
 import { getUsersObservable } from "../api/users";
+import { LoadingState } from "../types";
 
 // https://jsonplaceholder.typicode.com/users
 

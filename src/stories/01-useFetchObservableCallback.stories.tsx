@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from "react";
 
 import { User } from "../api/users";
-import useFetchObservableCallback, {
-  LoadingState,
-} from "../hooks/useFetchObservableCallback";
+import useFetchObservableCallback from "../hooks/useFetchObservableCallback";
 import { Observable } from "rxjs";
+import { LoadingState } from "../types";
 
 export default {
   title: "Fetch with observable callback",

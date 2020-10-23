@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 
 import { User } from "../api/users";
-import useFetchObservableCallback, {
-  LoadingState,
-} from "../hooks/useFetchObservableCallbackCorrect";
+import useFetchObservableCallback from "../hooks/useFetchObservableCallbackCorrect";
 import { Observable } from "rxjs";
+import { LoadingState } from "../types";
 
 const allUsers: User[] = [
   { id: 1, name: "User 1 name", age: 11 },

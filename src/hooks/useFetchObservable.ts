@@ -1,11 +1,7 @@
 import React from "react";
 import { Observable } from "rxjs";
 
-export enum LoadingState {
-  NOT_LOADED,
-  LOADING,
-  LOADED,
-}
+import { LoadingState } from "../types";
 
 type Query<T> = () => Observable<T>;
 type ReturnType<T> = { data: T; error: string; loadingState: LoadingState };
@@ -18,6 +14,7 @@ export default function useFetchObservable<T>(
   const [error] = React.useState("");
 
   React.useEffect(() => {
+    setLoading(LoadingState.LOADING);
     const subscription = query().subscribe((_data) => {
       setData(_data);
       setLoading(LoadingState.LOADED);

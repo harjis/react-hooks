@@ -1,7 +1,8 @@
 import React from "react";
 
-import useFetch, { LoadingState } from "../hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 import { getUsers } from "../api/users";
+import { LoadingState } from "../types";
 
 // https://jsonplaceholder.typicode.com/users
 

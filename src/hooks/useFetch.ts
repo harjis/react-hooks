@@ -1,10 +1,6 @@
 import React from "react";
 
-export enum LoadingState {
-  NOT_LOADED,
-  LOADING,
-  LOADED,
-}
+import { LoadingState } from "../types";
 
 type Query<T> = () => Promise<T>;
 type ReturnType<T> = { data: T; error: string; loadingState: LoadingState };

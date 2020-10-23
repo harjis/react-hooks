@@ -1,11 +1,7 @@
 import React, { useRef } from "react";
 import { Observable, Subscription } from "rxjs";
 
-export enum LoadingState {
-  NOT_LOADED,
-  LOADING,
-  LOADED,
-}
+import { LoadingState } from "../types";
 
 type Query<T> = () => Observable<T>;
 type ReturnType<T> = {

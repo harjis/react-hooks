@@ -25,8 +25,17 @@ export const UseSearch = () => {
     itemKey: "name",
   });
   return (
-    <div>
-      <SearchInput onSearch={onSearch} value={search} />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: 500,
+      }}
+    >
+      <div>
+        <SearchInput onSearch={onSearch} value={search} />
+      </div>
       <BulletPointList
         items={filteredItems}
         itemRenderer={(item) => item.name}
