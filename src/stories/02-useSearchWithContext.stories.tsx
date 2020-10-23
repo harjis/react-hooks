@@ -1,10 +1,11 @@
 import React from "react";
 
-import { SearchContext } from "../hooks/useSearch";
+import { SearchProvider } from "../hooks/useSearchContext";
+
 import {
   BulletPointListWithSearch,
   SearchInputWithSearch,
-} from "../components/SearchWithConstate";
+} from "../components/SearchWithContext";
 
 type Post = {
   id: number;
@@ -19,12 +20,10 @@ const posts: Post[] = [
 ];
 
 export default {
-  title: "Search with constate",
+  title: "Search with context",
 };
 
 export const UseSearch = () => {
-  const [SearchProvider] = SearchContext;
-
   return (
     <SearchProvider items={posts} itemKey="name">
       <div>
