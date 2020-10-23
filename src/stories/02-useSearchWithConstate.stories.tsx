@@ -1,15 +1,11 @@
 import React from "react";
-
-import { SearchContext } from "../hooks/useSearch";
 import {
-  BulletPointListWithSearch,
   SearchInputWithSearch,
-} from "../components/SearchWithConstate";
+  BulletPointListWithSearch,
+  SearchContext,
+  Post,
+} from "../features/PostsWithSearchWithConstate";
 
-type Post = {
-  id: number;
-  name: string;
-};
 const posts: Post[] = [
   { id: 1, name: "My favorite post" },
   { id: 2, name: "My least favorite post" },

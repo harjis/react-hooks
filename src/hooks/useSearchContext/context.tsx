@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 
-import useSearch, { Props, ReturnType, initialState } from "./useSearch";
+import useSearch, { Props, ReturnType, initialState } from "./../useSearch";
 
 function createUseCtx<T>(context: React.Context<T>) {
   return () => {

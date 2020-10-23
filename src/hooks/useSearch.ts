@@ -1,16 +1,22 @@
 import React from "react";
-import constate from "constate";
 
-type Props<T> = {
+export type Props<T> = {
   items: T[];
   itemKey: keyof T;
 };
-type ReturnType<T> = {
+export type ReturnType<T> = {
   filteredItems: T[];
   onSearch: (value: string) => void;
   search: string;
 };
-export default function useSearch<T extends Record<string, unknown>>({
+export const initialState = {
+  filteredItems: [],
+  onSearch: () => {
+    throw new Error("Implement onSearch");
+  },
+  search: "",
+};
+export default function useSearch<T>({
   items,
   itemKey,
 }: Props<T>): ReturnType<T> {
@@ -47,9 +53,3 @@ export default function useSearch<T extends Record<string, unknown>>({
 
   return { search, filteredItems, onSearch };
 }
-
-function createContexts<T extends Record<string, unknown>>() {
-  return constate<Props<T>, ReturnType<T>, []>(useSearch);
-}
-const SearchContext = createContexts();
-export { SearchContext };
