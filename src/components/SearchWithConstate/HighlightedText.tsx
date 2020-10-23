@@ -1,6 +1,8 @@
 import React from "react";
 import Highlighter from "react-highlight-words";
 
+import { SearchContext } from "../../hooks/useSearch";
+
 import styles from "./HighlightedText.module.css";
 
 type Props = {
@@ -16,3 +18,12 @@ export const HighlightedText: React.FC<Props> = (props) => (
     textToHighlight={props.text}
   />
 );
+
+type PropsWithSearch = {
+  text: string;
+};
+export const HighlightedTextWithSearch: React.FC<PropsWithSearch> = (props) => {
+  const [, useSearchContext] = SearchContext;
+  const { search } = useSearchContext();
+  return <HighlightedText search={[search]} text={props.text} />;
+};

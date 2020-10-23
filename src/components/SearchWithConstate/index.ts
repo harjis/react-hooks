@@ -1,5 +1,2 @@
-export { SearchInputWithConstate, SearchInput } from "./SearchInput";
-export {
-  BulletPointListWithConstate,
-  BulletPointList,
-} from "./BulletPointList";
+export { SearchInputWithSearch, SearchInput } from "./SearchInput";
+export { BulletPointListWithSearch, BulletPointList } from "./BulletPointList";

@@ -2,8 +2,8 @@ import React from "react";
 
 import { SearchContext } from "../hooks/useSearch";
 import {
-  BulletPointListWithConstate,
-  SearchInputWithConstate,
+  BulletPointListWithSearch,
+  SearchInputWithSearch,
 } from "../components/SearchWithConstate";
 
 type Post = {
@@ -28,8 +28,8 @@ export const UseSearch = () => {
   return (
     <SearchProvider items={posts} itemKey="name">
       <div>
-        <SearchInputWithConstate />
-        <BulletPointListWithConstate />
+        <SearchInputWithSearch />
+        <BulletPointListWithSearch />
       </div>
     </SearchProvider>
   );

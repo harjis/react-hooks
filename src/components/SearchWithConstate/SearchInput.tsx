@@ -16,7 +16,7 @@ export const SearchInput: React.FC<Props> = (props) => (
   />
 );
 
-export function SearchInputWithConstate() {
+export function SearchInputWithSearch() {
   const [, useSearchContext] = SearchContext;
   const { onSearch, search } = useSearchContext();
 
