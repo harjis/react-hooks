@@ -52,10 +52,10 @@ UseFetch.story = {
 
 function getUsersObservable(id: number): Observable<User[]> {
   const users = [
-    { id: 1, name: "1" },
-    { id: 2, name: "2" },
-    { id: 3, name: "3" },
-    { id: 4, name: "4" },
+    { id: 1, name: "1", age: 1 },
+    { id: 2, name: "2", age: 2 },
+    { id: 3, name: "3", age: 3 },
+    { id: 4, name: "4", age: 4 },
   ];
   return new Observable((subscriber) => {
     setTimeout(() => subscriber.next([users[id - 1]]), 1000);
