@@ -2,7 +2,11 @@ import React from "react";
 
 import useSearch from "../hooks/useSearch";
 
-const posts = [
+type Post = {
+  id: number;
+  name: string;
+};
+const posts: Post[] = [
   { id: 1, name: "My favorite post" },
   { id: 2, name: "My least favorite post" },
   { id: 3, name: "Not a post" },
@@ -15,15 +19,19 @@ export default {
 };
 
 export const UseSearch = () => {
-  const { filteredItems, onSearch } = useSearch(posts, "name");
+  const { search, filteredItems, onSearch } = useSearch({
+    items: posts,
+    itemKey: "name",
+  });
   return (
     <div>
       <input
         type="text"
         onChange={(event) => onSearch(event.currentTarget.value)}
+        value={search}
       />
       <ul>
-        {filteredItems.map((post) => (
+        {(filteredItems as Post[]).map((post) => (
           <li key={post.id}>{post.name}</li>
         ))}
       </ul>
