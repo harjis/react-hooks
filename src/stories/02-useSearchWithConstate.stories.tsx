@@ -2,7 +2,7 @@ import React from "react";
 import {
   SearchInputWithSearch,
   BulletPointListWithSearch,
-  SearchContext,
+  searchWithPostsConstateCreator,
   Post,
 } from "../features/PostsWithSearchWithConstate";
 
@@ -19,7 +19,7 @@ export default {
 };
 
 export const UseSearch = () => {
-  const [SearchProvider] = SearchContext;
+  const { SearchProvider } = searchWithPostsConstateCreator();
 
   return (
     <SearchProvider items={posts} itemKey="name">

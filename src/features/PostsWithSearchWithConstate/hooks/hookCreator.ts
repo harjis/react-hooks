@@ -1,10 +1,9 @@
-import constate from "constate";
-
-import useSearch, { Props, ReturnType } from "../../../hooks/useSearch";
 import { Post } from "../types";
+import { creator } from "../../../hooks/useSearchConstate";
 
-function createContexts() {
-  return constate<Props<Post>, ReturnType<Post>, []>(useSearch);
+function createSearchWithPostsConstate() {
+  const [SearchProvider, useSearchContext] = creator<Post>();
+  return () => ({ SearchProvider, useSearchContext });
 }
-const SearchContext = createContexts();
-export { SearchContext };
+
+export const searchWithPostsConstateCreator = createSearchWithPostsConstate();

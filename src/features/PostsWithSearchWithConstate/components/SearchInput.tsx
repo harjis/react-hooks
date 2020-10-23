@@ -1,10 +1,10 @@
 import React from "react";
 
 import { SearchInput } from "../../../components/Search";
-import { SearchContext } from "../hooks/hookCreator";
+import { searchWithPostsConstateCreator } from "../hooks/hookCreator";
 
 export function SearchInputWithSearch() {
-  const [, useSearchContext] = SearchContext;
+  const { useSearchContext } = searchWithPostsConstateCreator();
   const { onSearch, search } = useSearchContext();
 
   return <SearchInput onSearch={onSearch} value={search} />;
