@@ -1,8 +1,16 @@
-import { creator } from "../../../hooks/useSearchContext";
 import { Post } from "../../../types";
+import { createContext } from "../../../hooks/contextCreator";
+import useSearch, {
+  initialState,
+  Props,
+  ReturnType,
+} from "../../../hooks/useSearch";
 
 function createSearchWithPostsContext() {
-  const { SearchProvider, useSearchContext } = creator<Post>();
+  const {
+    Provider: SearchProvider,
+    useContext: useSearchContext,
+  } = createContext<Props<Post>, ReturnType<Post>>(useSearch, initialState);
   return () => ({ SearchProvider, useSearchContext });
 }
 

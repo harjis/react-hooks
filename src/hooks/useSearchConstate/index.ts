@@ -1,1 +1,0 @@
-export { creator } from "./constate";
