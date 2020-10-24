@@ -10,7 +10,7 @@ const itemRenderer = (item: Post) => (
 );
 
 export function BulletPointListWithSearch() {
-  const { useSearchContext } = searchWithPostsConstateCreator();
+  const { useSearchContext } = searchWithPostsConstateCreator;
   const { filteredItems } = useSearchContext();
 
   // TODO: How do you make this work with generics? :< filteredItems is any

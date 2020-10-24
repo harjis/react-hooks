@@ -7,7 +7,7 @@ type PropsWithSearch = {
   text: string;
 };
 export const HighlightedTextWithSearch: React.FC<PropsWithSearch> = (props) => {
-  const { useSearchContext } = searchWithPostsContextCreator();
+  const { useSearchContext } = searchWithPostsContextCreator;
   const { search } = useSearchContext();
 
   return <HighlightedText search={[search]} text={props.text} />;

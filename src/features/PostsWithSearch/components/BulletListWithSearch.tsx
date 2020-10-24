@@ -9,7 +9,7 @@ const itemRenderer = (item: Post) => (
   <HighlightedTextWithSearch text={item.name} />
 );
 export const BulletPointListWithSearch = () => {
-  const { useSearchContext } = searchWithPostsContextCreator();
+  const { useSearchContext } = searchWithPostsContextCreator;
   const { filteredItems } = useSearchContext();
 
   return <BulletPointList items={filteredItems} itemRenderer={itemRenderer} />;

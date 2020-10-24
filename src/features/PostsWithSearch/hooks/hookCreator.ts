@@ -11,7 +11,7 @@ function createSearchWithPostsContext() {
     Provider: SearchProvider,
     useContext: useSearchContext,
   } = createContext<Props<Post>, ReturnType<Post>>(useSearch, initialState);
-  return () => ({ SearchProvider, useSearchContext });
+  return { SearchProvider, useSearchContext };
 }
 
 export const searchWithPostsContextCreator = createSearchWithPostsContext();

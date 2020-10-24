@@ -8,7 +8,7 @@ function createSearchWithPostsConstate() {
     ReturnType<Post>,
     []
   >(useSearch);
-  return () => ({ SearchProvider, useSearchContext });
+  return { SearchProvider, useSearchContext };
 }
 
 export const searchWithPostsConstateCreator = createSearchWithPostsConstate();

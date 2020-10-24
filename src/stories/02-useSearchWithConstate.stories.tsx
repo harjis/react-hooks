@@ -13,7 +13,7 @@ export default {
 };
 
 export const UseSearch = () => {
-  const { SearchProvider } = searchWithPostsConstateCreator();
+  const { SearchProvider } = searchWithPostsConstateCreator;
   const { data: posts, error, loadingState } = useFetchObservable(getPosts, []);
   return (
     <SearchProvider items={posts} itemKey="name">
