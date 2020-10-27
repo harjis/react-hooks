@@ -11,6 +11,7 @@ export const SearchInput: React.FC<Props> = (props) => (
       const value = event.currentTarget.value;
       props.onSearch(value);
     }}
+    placeholder="Search"
     value={props.value}
   />
 );

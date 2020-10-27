@@ -1,19 +1,14 @@
 import React from "react";
-import {
-  SearchInputWithSearch,
-  BulletPointListWithSearch,
-  searchWithPostsConstateCreator,
-} from "../features/PostsWithSearchWithConstate";
-import useFetchObservable from "../hooks/useFetchObservable";
-import Loading from "../components/Loading";
-import { getPosts } from "../api/posts";
 
-export default {
-  title: "Search with constate",
-};
+import Loading from "../../../components/Loading";
+import useFetchObservable from "../../../hooks/useFetchObservable";
+import { BulletPointListWithSearch } from "./BulletListWithSearch";
+import { getPosts } from "../../../api/posts";
+import { SearchInputWithSearch } from "./SearchInput";
+import { searchWithPostsContextCreator } from "../hooks/hookCreator";
 
-export const UseSearch = () => {
-  const { SearchProvider } = searchWithPostsConstateCreator;
+export const PostsWithSearch = () => {
+  const { SearchProvider } = searchWithPostsContextCreator;
   const { data: posts, error, loadingState } = useFetchObservable(getPosts, []);
   return (
     <SearchProvider items={posts} itemKey="name">
@@ -34,8 +29,4 @@ export const UseSearch = () => {
       </div>
     </SearchProvider>
   );
-};
-
-UseSearch.story = {
-  name: "useSearch with highlighting",
 };

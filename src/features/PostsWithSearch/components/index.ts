@@ -1,2 +1,1 @@
-export { SearchInputWithSearch } from "./SearchInput";
-export { BulletPointListWithSearch } from "./BulletListWithSearch";
+export { PostsWithSearch } from "./PostsWithSearch";
