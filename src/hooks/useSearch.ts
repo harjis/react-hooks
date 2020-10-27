@@ -3,6 +3,7 @@ import React from "react";
 export type Props<T> = {
   items: T[];
   itemKey: keyof T;
+  options?: { caseSensitive: boolean };
 };
 export type ReturnType<T> = {
   filteredItems: T[];
@@ -19,25 +20,17 @@ export const initialState = {
 export default function useSearch<T>({
   items,
   itemKey,
+  options,
 }: Props<T>): ReturnType<T> {
   const [search, setSearch] = React.useState("");
   const [filteredItems, setFilteredItems] = React.useState(items);
 
   const doSearch = React.useCallback(
-    (value: string): T[] => {
-      return items.reduce<T[]>((acc, filteredItem) => {
-        const filteredItemValue = filteredItem[itemKey];
-        if (
-          typeof filteredItemValue === "string" &&
-          filteredItemValue.toLocaleLowerCase().includes(value.toLowerCase())
-        ) {
-          return [...acc, filteredItem];
-        } else {
-          return acc;
-        }
-      }, []);
-    },
-    [items, itemKey]
+    (value: string): T[] =>
+      options && options.caseSensitive === true
+        ? caseSensitiveFilteringService(items, itemKey, value)
+        : filteringService(items, itemKey, value),
+    [items, itemKey, options]
   );
 
   React.useEffect(() => {
@@ -60,4 +53,36 @@ export default function useSearch<T>({
   };
 
   return { search, filteredItems, onSearch };
+}
+
+function filteringService<T>(items: T[], itemKey: keyof T, value: string) {
+  return items.reduce<T[]>((acc, filteredItem) => {
+    const filteredItemValue = filteredItem[itemKey];
+    if (
+      typeof filteredItemValue === "string" &&
+      filteredItemValue.toLocaleLowerCase().includes(value.toLowerCase())
+    ) {
+      return [...acc, filteredItem];
+    } else {
+      return acc;
+    }
+  }, []);
+}
+
+function caseSensitiveFilteringService<T>(
+  items: T[],
+  itemKey: keyof T,
+  value: string
+) {
+  return items.reduce<T[]>((acc, filteredItem) => {
+    const filteredItemValue = filteredItem[itemKey];
+    if (
+      typeof filteredItemValue === "string" &&
+      filteredItemValue.includes(value)
+    ) {
+      return [...acc, filteredItem];
+    } else {
+      return acc;
+    }
+  }, []);
 }

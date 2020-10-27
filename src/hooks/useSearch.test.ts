@@ -67,7 +67,7 @@ describe("useSearch", () => {
       expect(result.current.search).toEqual(search);
     });
 
-    it("filters items case insensitively", () => {
+    it("filters items case-insensitively", () => {
       const search = "cat";
       const { result } = renderHook<Props<Item>, ReturnType<Item>>(
         ({ items, itemKey }) => useSearch<Item>({ items, itemKey }),
@@ -79,6 +79,26 @@ describe("useSearch", () => {
       });
       expect(result.current.filteredItems.length).toEqual(1);
       expect(result.current.filteredItems[0]).toEqual(items[1]);
+    });
+
+    it("can filter items case-sensitively", () => {
+      const search = "cat";
+      const { result } = renderHook<Props<Item>, ReturnType<Item>>(
+        ({ items, itemKey, options }) =>
+          useSearch<Item>({ items, itemKey, options }),
+        {
+          initialProps: {
+            items,
+            itemKey: "name",
+            options: { caseSensitive: true },
+          },
+        }
+      );
+
+      act(() => {
+        result.current.onSearch(search);
+      });
+      expect(result.current.filteredItems.length).toEqual(0);
     });
   });
 
@@ -135,6 +155,7 @@ describe("useSearch", () => {
         name: "Dog 6",
       },
     ];
+
     it("does not reset search", () => {
       const search = "Cat";
       const { result, rerender } = renderHook<Props<Item>, ReturnType<Item>>(
