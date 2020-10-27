@@ -13,12 +13,12 @@ describe(useFetchObservable, () => {
     beforeAll(() => {
       dummyQuery = () => from(dummyRequest(data));
     });
-    it("is not loading", async () => {
+    it("is loading", async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useFetchObservable(dummyQuery, initialData)
       );
 
-      expect(result.current.loadingState).toEqual(LoadingState.NOT_LOADED);
+      expect(result.current.loadingState).toEqual(LoadingState.LOADING);
       await waitForNextUpdate();
     });
 
