@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { from, Observable } from "rxjs";
 
-import useFetchObservable from "../hooks/useFetchObservable";
+import useFetchObservable from "./useFetchObservable";
 import { LoadingState } from "../types";
 
 const initialData: string[] = [];

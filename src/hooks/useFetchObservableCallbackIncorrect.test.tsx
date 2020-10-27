@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
 
-import useFetchObservableCallback from "../hooks/useFetchObservableCallbackIncorrect";
+import useFetchObservableCallback from "./useFetchObservableCallbackIncorrect";
 
 const initialData: string[] = [];
 describe(useFetchObservableCallback, () => {
