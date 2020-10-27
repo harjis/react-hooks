@@ -22,32 +22,40 @@ export default function useSearch<T>({
 }: Props<T>): ReturnType<T> {
   const [search, setSearch] = React.useState("");
   const [filteredItems, setFilteredItems] = React.useState(items);
+
+  const doSearch = React.useCallback(
+    (value: string): T[] => {
+      return items.reduce<T[]>((acc, filteredItem) => {
+        const filteredItemValue = filteredItem[itemKey];
+        if (
+          typeof filteredItemValue === "string" &&
+          filteredItemValue.toLocaleLowerCase().includes(value.toLowerCase())
+        ) {
+          return [...acc, filteredItem];
+        } else {
+          return acc;
+        }
+      }, []);
+    },
+    [items, itemKey]
+  );
+
   React.useEffect(() => {
-    setFilteredItems(items);
-  }, [items]);
+    setFilteredItems(doSearch(search));
+  }, [items, search, doSearch]);
 
   const resetSearch = (): void => {
-    setFilteredItems(items);
+    // setFilteredItems(items);
     setSearch("");
-  };
-
-  const doSearch = (value: string): T[] => {
-    return items.reduce<T[]>((acc, filteredItem) => {
-      const filteredItemValue = filteredItem[itemKey];
-      if (
-        typeof filteredItemValue === "string" &&
-        filteredItemValue.toLocaleLowerCase().includes(value.toLowerCase())
-      ) {
-        return [...acc, filteredItem];
-      } else {
-        return acc;
-      }
-    }, []);
   };
 
   const onSearch = (value: string): void => {
     if (value === "") return resetSearch();
-    setFilteredItems(doSearch(value));
+    // We are not setting filteredItems here on purpose. Setting only search string ends up in the effect
+    // few lines above.
+    // If hook receives new items we want to maintain the search and do it for the new items. This is
+    // why we have the effect and why it's not necessary the filter items in this function or in resetSearch
+    // setFilteredItems(doSearch(value));
     setSearch(value);
   };
 
