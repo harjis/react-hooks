@@ -17,7 +17,8 @@ export function createContext<Props, ReturnValue>(
   const Provider: React.FC<Props> = (props) => {
     const { children, ...rest } = props;
     const { Provider } = context;
-    // TODO why is as Props needed
+    // Maybe Ryan knows? 🤔
+    // https://github.com/microsoft/TypeScript/issues/35858#issuecomment-573909154
     const returnValue = hook(rest as Props);
     return <Provider value={returnValue}>{children}</Provider>;
   };
