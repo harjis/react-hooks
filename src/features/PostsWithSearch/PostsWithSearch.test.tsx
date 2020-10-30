@@ -13,23 +13,23 @@ const postsMock = [
 ];
 
 describe("PostsWithSearch", () => {
-  it("is initially loading", () => {
+  it("is initially loading", async () => {
     (fakeHttpLib.get as jest.Mock).mockResolvedValue(postsMock);
     const { getByText } = render(<PostsWithSearch />);
-    waitFor(() => expect(getByText("Loading...")).toBeInTheDocument());
+    await waitFor(() => expect(getByText("Loading...")).toBeInTheDocument());
   });
 
-  it("has items after loading", () => {
+  it("has items after loading", async () => {
     (fakeHttpLib.get as jest.Mock).mockResolvedValue(postsMock);
     const { getAllByText } = render(<PostsWithSearch />);
-    waitFor(() => {
+    await waitFor(() => {
       const items = getAllByText(/Mocked Post [0-9]/);
       expect(items.length).toEqual(3);
     });
   });
 
   describe("when user types in search input", () => {
-    it("filters content accordingly", () => {
+    it("filters content accordingly", async () => {
       (fakeHttpLib.get as jest.Mock).mockResolvedValue(postsMock);
       const { getByPlaceholderText, getAllByText } = render(
         <PostsWithSearch />
@@ -38,15 +38,15 @@ describe("PostsWithSearch", () => {
         userEvent.type(getByPlaceholderText("Search"), "3");
       });
 
-      waitFor(() => {
-        const items = getAllByText(/Mocked Post [0-9]/);
+      await waitFor(() => {
+        const items = getAllByText(/Mocked Post/);
         expect(items.length).toEqual(1);
       });
     });
   });
 
   describe("when user clears search input", () => {
-    it("resets content to initial items", () => {
+    it("resets content to initial items", async () => {
       (fakeHttpLib.get as jest.Mock).mockResolvedValue(postsMock);
       const { getByPlaceholderText, getAllByText } = render(
         <PostsWithSearch />
@@ -55,17 +55,17 @@ describe("PostsWithSearch", () => {
         userEvent.type(getByPlaceholderText("Search"), "3");
       });
 
-      waitFor(() => {
-        const items = getAllByText(/Mocked Post [0-9]/);
+      await waitFor(() => {
+        const items = getAllByText(/Mocked Post/);
         expect(items.length).toEqual(1);
       });
 
       act(() => {
-        userEvent.type(getByPlaceholderText("Search"), "");
+        userEvent.clear(getByPlaceholderText("Search"));
       });
 
-      waitFor(() => {
-        const items = getAllByText(/Mocked Post [0-9]/);
+      await waitFor(() => {
+        const items = getAllByText(/Mocked Post/);
         expect(items.length).toEqual(3);
       });
     });
