@@ -4,7 +4,11 @@ import { useSnapshotStore } from "./hooks/useSnapshotStore";
 
 const initialState = { counter: 0 };
 const App: React.FC = () => {
-  const { onSetState, state } = useSnapshotStore({
+  const {
+    onSaveLocalStorage,
+    onRemoveFromLocalStorage,
+    state,
+  } = useSnapshotStore({
     initialState,
     localStorageKey: "my-storage",
   });
@@ -26,7 +30,12 @@ const App: React.FC = () => {
       <div>
         <button onClick={inc}>+</button>
         <button onClick={dec}>-</button>
-        <button onClick={() => onSetState(counter)}>Save to store</button>
+        <button onClick={() => onSaveLocalStorage(counter)}>
+          Save to store
+        </button>
+        <button onClick={() => onRemoveFromLocalStorage()}>
+          Remove from store
+        </button>
       </div>
       <div>
         counter: {counter.counter} persistedState: {state.counter}
