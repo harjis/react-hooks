@@ -1,24 +1,36 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
 
+import { useSnapshotStore } from "./hooks/useSnapshotStore";
+
+const initialState = { counter: 0 };
 const App: React.FC = () => {
+  const { onSetState, state } = useSnapshotStore({
+    initialState,
+    localStorageKey: "my-storage",
+  });
+
+  const [counter, setCounter] = React.useState(state);
+  const inc = () =>
+    setCounter((prevState) => ({
+      ...prevState,
+      counter: prevState.counter + 1,
+    }));
+
+  const dec = () =>
+    setCounter((prevState) => ({
+      ...prevState,
+      counter: prevState.counter - 1,
+    }));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div>
+        <button onClick={inc}>+</button>
+        <button onClick={dec}>-</button>
+        <button onClick={() => onSetState(counter)}>Save to store</button>
+      </div>
+      <div>
+        counter: {counter.counter} persistedState: {state.counter}
+      </div>
     </div>
   );
 };
