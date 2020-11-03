@@ -1,5 +1,8 @@
 import React from "react";
 
+type GeneratedKeys = { [key: string]: true };
+const generatedKeys: GeneratedKeys = {};
+
 export type Props<T> = {
   initialState: T;
   localStorageKey: string;
@@ -13,6 +16,16 @@ export const useSnapshotStore = <T>({
   initialState,
   localStorageKey,
 }: Props<T>): ReturnType<T> => {
+  React.useEffect(() => {
+    if (!generatedKeys[localStorageKey]) {
+      generatedKeys[localStorageKey] = true;
+    } else {
+      throw new Error("Key is already in use by another hook");
+    }
+    // Eslint is disabled on purpose for this. The effect registers an id for a hook
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [snapshotState, setSnapshotState] = React.useState(() => {
     try {
       const item = localStorage.getItem(localStorageKey);
@@ -33,6 +46,7 @@ export const useSnapshotStore = <T>({
 
   const onRemoveFromLocalStorage = () => {
     localStorage.removeItem(localStorageKey);
+    delete generatedKeys[localStorageKey];
   };
 
   return { state: snapshotState, onSaveLocalStorage, onRemoveFromLocalStorage };

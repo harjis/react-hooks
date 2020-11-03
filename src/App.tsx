@@ -4,13 +4,24 @@ import { useSnapshotStore } from "./hooks/useSnapshotStore";
 
 const initialState = { counter: 0 };
 const App: React.FC = () => {
+  return (
+    <div>
+      <Counter id={1} />
+      <Counter id={2} />
+    </div>
+  );
+};
+
+export default App;
+
+function Counter(props: { id: number }) {
   const {
     onSaveLocalStorage,
     onRemoveFromLocalStorage,
     state,
   } = useSnapshotStore({
     initialState,
-    localStorageKey: "my-storage",
+    localStorageKey: "my-storage-" + props.id,
   });
 
   const [counter, setCounter] = React.useState(state);
@@ -42,6 +53,4 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default App;
+}
