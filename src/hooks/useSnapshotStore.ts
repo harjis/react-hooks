@@ -20,8 +20,14 @@ export const useSnapshotStore = <T>({
     if (!generatedKeys[localStorageKey]) {
       generatedKeys[localStorageKey] = true;
     } else {
-      throw new Error("Key is already in use by another hook");
+      throw new Error(
+        `Key: ${localStorageKey} is already in use by another hook`
+      );
     }
+
+    return () => {
+      delete generatedKeys[localStorageKey];
+    };
     // Eslint is disabled on purpose for this. The effect registers an id for a hook
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

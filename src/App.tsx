@@ -4,10 +4,20 @@ import { useSnapshotStore } from "./hooks/useSnapshotStore";
 
 const initialState = { counter: 0 };
 const App: React.FC = () => {
+  const [isMounted, setIsMounted] = React.useState(true);
   return (
     <div>
-      <Counter id={1} />
-      <Counter id={2} />
+      <div>
+        <button
+          onClick={() => {
+            setIsMounted((prevState) => !prevState);
+          }}
+        >
+          {isMounted ? "Click to unmount" : "Click to mount"}
+        </button>
+      </div>
+      {isMounted && <Counter id={1} />}
+      {isMounted && <Counter id={2} />}
     </div>
   );
 };
