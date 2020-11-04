@@ -25,11 +25,7 @@ const App: React.FC = () => {
 export default App;
 
 function Counter(props: { id: number }) {
-  const {
-    onSaveLocalStorage,
-    onRemoveFromLocalStorage,
-    state,
-  } = useSnapshotStore({
+  const { save, remove, state } = useSnapshotStore({
     initialState,
     localStorageKey: "my-storage-" + props.id,
   });
@@ -51,12 +47,8 @@ function Counter(props: { id: number }) {
       <div>
         <button onClick={inc}>+</button>
         <button onClick={dec}>-</button>
-        <button onClick={() => onSaveLocalStorage(counter)}>
-          Save to store
-        </button>
-        <button onClick={() => onRemoveFromLocalStorage()}>
-          Remove from store
-        </button>
+        <button onClick={() => save(counter)}>Save to store</button>
+        <button onClick={() => remove()}>Remove from store</button>
       </div>
       <div>
         counter: {counter.counter} persistedState: {state.counter}

@@ -27,7 +27,7 @@ describe("useSnapshotStore", () => {
 
     const nextState = { counter: 100 };
     act(() => {
-      result.current.onSaveLocalStorage(nextState);
+      result.current.save(nextState);
     });
 
     expect(result.current.state).toEqual(nextState);
@@ -40,7 +40,7 @@ describe("useSnapshotStore", () => {
 
     const nextState = { counter: 100 };
     act(() => {
-      result.current.onSaveLocalStorage(nextState);
+      result.current.save(nextState);
     });
 
     expect(result.current.state).toEqual(nextState);
@@ -56,7 +56,7 @@ describe("useSnapshotStore", () => {
       );
       const nextState = { counter: 100 };
       act(() => {
-        result.current.onSaveLocalStorage(nextState);
+        result.current.save(nextState);
       });
       expect(result.current.state).toEqual(nextState);
       unmount();
@@ -80,7 +80,7 @@ describe("useSnapshotStore", () => {
       );
       const nextState = { counter: 100 };
       act(() => {
-        result.current.onSaveLocalStorage(nextState);
+        result.current.save(nextState);
       });
       expect(result.current.state).toEqual(nextState);
       unmount();

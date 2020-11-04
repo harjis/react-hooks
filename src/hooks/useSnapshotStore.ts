@@ -9,8 +9,8 @@ export type Props<T> = {
 };
 type ReturnType<T> = {
   state: T;
-  onSaveLocalStorage: (state: T) => void;
-  onRemoveFromLocalStorage: () => void;
+  save: (state: T) => void;
+  remove: () => void;
 };
 export const useSnapshotStore = <T>({
   initialState,
@@ -41,7 +41,7 @@ export const useSnapshotStore = <T>({
     }
   });
 
-  const onSaveLocalStorage = (state: T) => {
+  const save = (state: T) => {
     try {
       setSnapshotState(state);
       localStorage.setItem(localStorageKey, JSON.stringify(state));
@@ -50,10 +50,10 @@ export const useSnapshotStore = <T>({
     }
   };
 
-  const onRemoveFromLocalStorage = () => {
+  const remove = () => {
     localStorage.removeItem(localStorageKey);
     delete generatedKeys[localStorageKey];
   };
 
-  return { state: snapshotState, onSaveLocalStorage, onRemoveFromLocalStorage };
+  return { state: snapshotState, save, remove };
 };
