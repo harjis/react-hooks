@@ -18,9 +18,8 @@ const eventListeners: EventListener[] = [
 ];
 export const Hotkeys: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(true);
-  // TODO why HTMLElement real one is HtmlDivElement
-  const ref = useHotkeys<HTMLElement>({ autoFocus: true, eventListeners });
-  const refC = useEffectRef(ref);
+  const ref = useHotkeys<HTMLDivElement>({ autoFocus: true, eventListeners });
+  const refC = useEffectRef<HTMLDivElement>(ref);
 
   return (
     <div>
