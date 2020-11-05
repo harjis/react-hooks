@@ -5,6 +5,7 @@ import { useSnapshotStore } from "./hooks/useSnapshotStore";
 const initialState = { counter: 0 };
 const App: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(true);
+  const counters = Array.from({ length: 5 }, (x, i) => i);
   return (
     <div>
       <div>
@@ -16,8 +17,9 @@ const App: React.FC = () => {
           {isMounted ? "Click to unmount" : "Click to mount"}
         </button>
       </div>
-      {isMounted && <Counter id={1} />}
-      {isMounted && <Counter id={2} />}
+
+      {isMounted &&
+        counters.map((counter) => <Counter key={counter} id={counter} />)}
     </div>
   );
 };
