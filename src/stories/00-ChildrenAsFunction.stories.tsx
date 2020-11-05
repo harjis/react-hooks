@@ -1,15 +1,15 @@
 import React from "react";
 
-import Counter from "../components/Counter";
+import CounterCaaf from "../components/CounterCaaf";
 
 export default {
-  title: "Counter with Children as function"
+  title: "Counter with Children as function",
 };
 
 export const CounterWithComponent = () => {
   return (
     <div>
-      <Counter>
+      <CounterCaaf>
         {({ counter, inc, dec }) => (
           <>
             <button onClick={inc}>+</button>
@@ -17,11 +17,11 @@ export const CounterWithComponent = () => {
             {counter}
           </>
         )}
-      </Counter>
+      </CounterCaaf>
     </div>
   );
 };
 
 CounterWithComponent.story = {
-  name: "component"
+  name: "component",
 };

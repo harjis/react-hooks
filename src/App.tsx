@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
+import { useSnapshotStore } from "./hooks/useSnapshotStore";
+
+const initialState = { counter: 0 };
 const App: React.FC = () => {
+  const [isMounted, setIsMounted] = React.useState(true);
+  const counters = Array.from({ length: 5 }, (x, i) => i);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div>
+        <button
+          onClick={() => {
+            setIsMounted((prevState) => !prevState);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          {isMounted ? "Click to unmount" : "Click to mount"}
+        </button>
+      </div>
+
+      {isMounted &&
+        counters.map((counter) => <Counter key={counter} id={counter} />)}
+    </div>
+  );
+};
+
+export default App;
+
+function Counter(props: { id: number }) {
+  const { save, remove, state } = useSnapshotStore({
+    initialState,
+    localStorageKey: "my-storage-" + props.id,
+  });
+
+  const [counter, setCounter] = React.useState(state);
+  const inc = () =>
+    setCounter((prevState) => ({
+      ...prevState,
+      counter: prevState.counter + 1,
+    }));
+
+  const dec = () =>
+    setCounter((prevState) => ({
+      ...prevState,
+      counter: prevState.counter - 1,
+    }));
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div>
+        <button onClick={inc}>+</button>
+        <button onClick={dec}>-</button>
+        <button onClick={() => save(counter)}>Save to store</button>
+        <button onClick={() => remove()}>Remove from store</button>
+      </div>
+      <div>
+        counter: {counter.counter} persistedState: {state.counter}
+      </div>
     </div>
   );
 }
-
-export default App;

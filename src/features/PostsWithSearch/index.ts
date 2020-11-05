@@ -1,0 +1,1 @@
+export { PostsWithSearch } from "./components";

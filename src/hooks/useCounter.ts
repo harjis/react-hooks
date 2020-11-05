@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-type ReturnType = {
+export type ReturnType = {
   counter: number;
   inc: () => void;
   dec: () => void;
@@ -8,8 +8,8 @@ type ReturnType = {
 export default function useCounter(): ReturnType {
   const [counter, setCounter] = React.useState(0);
 
-  const inc = () => setCounter(prevState => prevState + 1);
-  const dec = () => setCounter(prevState => prevState - 1);
+  const inc = () => setCounter((prevState) => prevState + 1);
+  const dec = () => setCounter((prevState) => prevState - 1);
 
   return { counter, inc, dec };
 }

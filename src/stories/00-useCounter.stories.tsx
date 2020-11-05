@@ -3,7 +3,7 @@ import React from "react";
 import useCounter from "../hooks/useCounter";
 
 export default {
-  title: "Counter with hook"
+  title: "Counter with hook",
 };
 
 export const CounterWithHook = () => {
@@ -18,5 +18,5 @@ export const CounterWithHook = () => {
 };
 
 CounterWithHook.story = {
-  name: "useCounter"
+  name: "useCounter",
 };

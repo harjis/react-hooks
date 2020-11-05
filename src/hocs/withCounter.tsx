@@ -18,17 +18,17 @@ const withCounter = <P extends InjectedProps>(
     State
   > {
     state = {
-      counter: 0
+      counter: 0,
     };
     inc = () =>
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        counter: prevState.counter + 1
+        counter: prevState.counter + 1,
       }));
     dec = () =>
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        counter: prevState.counter - 1
+        counter: prevState.counter - 1,
       }));
 
     render() {
