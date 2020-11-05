@@ -2,7 +2,6 @@ import React from "react";
 import { Story } from "@storybook/react";
 
 import { useHotkeys, EventListener } from "../hooks/useHotkeys";
-import { useEffectRef } from "../hooks/useEffectRef";
 
 export default {
   title: "useHotkeys",
@@ -19,7 +18,6 @@ const eventListeners: EventListener[] = [
 export const Hotkeys: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(true);
   const ref = useHotkeys<HTMLDivElement>({ autoFocus: true, eventListeners });
-  const refC = useEffectRef<HTMLDivElement>(ref);
 
   return (
     <div>
@@ -34,7 +32,7 @@ export const Hotkeys: React.FC = () => {
         <div
           tabIndex={0}
           style={{ height: 100, width: 100, border: "1px solid black" }}
-          ref={refC}
+          ref={ref}
         >
           hot
         </div>

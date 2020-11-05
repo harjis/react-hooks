@@ -1,43 +1,34 @@
-import { useRef, useCallback } from "react";
+import React from "react";
 
-export type EffectRef<E extends HTMLElement = HTMLElement> = (
-  element: E | null
-) => void;
-
-export type RefCallback<E extends HTMLElement = HTMLElement> = (
-  element: E
-) => (() => void) | void;
-
+type Cleanup = () => void;
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
+const noop: Cleanup = () => {};
 
-export function useEffectRef<E extends HTMLElement>(
-  callback: RefCallback<E>
-): EffectRef<E> {
-  const disposeRef = useRef<() => void>(noop);
-  const effect = useCallback(
-    (element: E | null) => {
+type EffectRef<RefElement extends HTMLElement> = (
+  element: RefElement | null
+) => void;
+export type RefCallbackWithCleanup<RefElement extends HTMLElement> = (
+  element: RefElement
+) => () => void;
+
+/*
+ * The idea of this hook is to generalize cleanup for RefCallback.
+ * By default React.RefCallback doesn't support cleanup.
+ * */
+export function useEffectRef<RefElement extends HTMLElement>(
+  callback: RefCallbackWithCleanup<RefElement>
+): EffectRef<RefElement> {
+  const disposeRef = React.useRef<Cleanup>(noop);
+  return React.useCallback(
+    (element: RefElement | null) => {
       disposeRef.current();
       // To ensure every dispose function is called only once.
       disposeRef.current = noop;
 
       if (element) {
-        const dispose = callback(element);
-
-        if (typeof dispose === "function") {
-          disposeRef.current = dispose;
-        }
-        // Have an extra type check to work with javascript.
-        else if (dispose !== undefined) {
-          // eslint-disable-next-line no-console
-          console.warn(
-            "Effect ref callback must return undefined or a dispose function"
-          );
-        }
+        disposeRef.current = callback(element);
       }
     },
     [callback]
   );
-
-  return effect;
 }

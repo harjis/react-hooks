@@ -1,4 +1,5 @@
 import React from "react";
+import { RefCallbackWithCleanup, useEffectRef } from "./useEffectRef";
 
 export type EventListener = {
   keys: string[];
@@ -9,12 +10,11 @@ type Props = {
   autoFocus: boolean;
   eventListeners: EventListener[];
 };
-type ReturnType<RefElement> = React.RefCallback<RefElement>;
 export const useHotkeys = <RefElement extends HTMLElement>(
   props: Props
-): ReturnType<RefElement> => {
+): React.RefCallback<RefElement> => {
   const { autoFocus, eventListeners } = props;
-  const refCallback: React.RefCallback<RefElement> = React.useCallback(
+  const refCallback: RefCallbackWithCleanup<RefElement> = React.useCallback(
     (element) => {
       const handlers: Handler[] = [];
       eventListeners.forEach(({ keys, eventListener }) => {
@@ -32,6 +32,7 @@ export const useHotkeys = <RefElement extends HTMLElement>(
       }
 
       return () => {
+        console.log("Cleanup time!");
         handlers.forEach((handler) => {
           element?.removeEventListener("keydown", handler);
         });
@@ -39,5 +40,5 @@ export const useHotkeys = <RefElement extends HTMLElement>(
     },
     [autoFocus, eventListeners]
   );
-  return refCallback;
+  return useEffectRef<RefElement>(refCallback);
 };
