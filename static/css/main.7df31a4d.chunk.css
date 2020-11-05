@@ -1,0 +1,28 @@
+.HighlightedText_highlight__2WC4V {
+  background: #fcf8be;
+}
+
+.Loading_container__o1Lrm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hoverYes {
+  display: none;
+}
+
+.hoverNo {
+  display: inline;
+}
+
+.container:hover .hoverYes {
+  display: inline;
+}
+
+.container:hover .hoverNo {
+  display: none;
+}
+
+
+/*# sourceMappingURL=main.7df31a4d.chunk.css.map*/
