@@ -31,6 +31,7 @@ describe("useSnapshotStore", () => {
     });
 
     expect(result.current.state).toEqual(nextState);
+    expect(getObjectFromLocalStorage(props.localStorageKey)).toEqual(nextState);
   });
 
   it("can remove state", () => {
@@ -42,8 +43,12 @@ describe("useSnapshotStore", () => {
     act(() => {
       result.current.save(nextState);
     });
+    act(() => {
+      result.current.remove();
+    });
 
-    expect(result.current.state).toEqual(nextState);
+    expect(result.current.state).toEqual(initialState);
+    expect(getObjectFromLocalStorage(props.localStorageKey)).toBeNull();
   });
 
   describe("when hook is called with duplicate id", () => {
@@ -82,6 +87,9 @@ describe("useSnapshotStore", () => {
         result.current.save(nextState);
       });
       expect(result.current.state).toEqual(nextState);
+      expect(getObjectFromLocalStorage(props.localStorageKey)).toEqual(
+        nextState
+      );
       unmount();
 
       const { result: result2 } = renderHook(
@@ -92,6 +100,9 @@ describe("useSnapshotStore", () => {
       );
 
       expect(result2.current.state).toEqual(nextState);
+      expect(getObjectFromLocalStorage(props.localStorageKey)).toEqual(
+        nextState
+      );
     });
 
     it("starts from initialState if no previous state is present", () => {
@@ -106,6 +117,9 @@ describe("useSnapshotStore", () => {
         result.current.save(nextState);
       });
       expect(result.current.state).toEqual(nextState);
+      expect(getObjectFromLocalStorage(props.localStorageKey)).toEqual(
+        nextState
+      );
       unmount();
 
       const newInitialState = { counter: 1 };
@@ -120,6 +134,12 @@ describe("useSnapshotStore", () => {
       );
 
       expect(result2.current.state).toEqual(newInitialState);
+      expect(getObjectFromLocalStorage("new-key")).toEqual(newInitialState);
     });
   });
 });
+
+function getObjectFromLocalStorage<T>(localStorageKey: string): T | null {
+  const object = localStorage.getItem(localStorageKey);
+  return object ? JSON.parse(object) : object;
+}
