@@ -44,8 +44,8 @@
     "ts": "tsc --pretty --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "prettier": "npx prettier --write .",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build-storybook",
+    "deploy": "gh-pages -d storybook-static"
   },
   "eslintConfig": {
     "extends": "react-app"
