@@ -15,7 +15,7 @@ const eventListeners: EventListener[] = [
     },
   },
 ];
-export const Hotkeys: React.FC = () => {
+const Hotkeys: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(true);
   const ref = useHotkeys<HTMLDivElement>({ autoFocus: true, eventListeners });
 
@@ -34,7 +34,7 @@ export const Hotkeys: React.FC = () => {
           style={{ height: 100, width: 100, border: "1px solid black" }}
           ref={ref}
         >
-          hot
+          Press A or B
         </div>
       )}
     </div>
