@@ -1,6 +1,6 @@
-# Solutions branch contains all the solutions for the tasks
+# Different kind of hooks
 
-- We are already using this: https://reactjs.org/docs/hooks-rules.html
+https://harjis.github.io/react-hooks
 
 ## Start storybook
 
