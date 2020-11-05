@@ -46,6 +46,29 @@ describe("useSnapshotStore", () => {
     expect(result.current.state).toEqual(nextState);
   });
 
+  describe("when hook is called with duplicate id", () => {
+    beforeEach(() => {
+      jest.spyOn(console, "error");
+      (console.error as jest.Mock).mockImplementation(() => true);
+    });
+
+    afterEach(() => {
+      (console.error as jest.Mock).mockRestore();
+    });
+
+    it("throws an error", () => {
+      renderHook((props) => useSnapshotStore(props), {
+        initialProps: props,
+      });
+
+      expect(() => {
+        renderHook((props) => useSnapshotStore(props), {
+          initialProps: props,
+        });
+      }).toThrow();
+    });
+  });
+
   describe("when component re-mounts", () => {
     it("hydrates state from localStorage if it is present", () => {
       const { result, unmount } = renderHook(
