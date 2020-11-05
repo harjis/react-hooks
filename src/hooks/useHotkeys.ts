@@ -9,17 +9,14 @@ type Props = {
   autoFocus: boolean;
   eventListeners: EventListener[];
 };
-type ReturnType<RefElement> = React.RefObject<RefElement>;
+type ReturnType<RefElement> = React.RefCallback<RefElement>;
 export const useHotkeys = <RefElement extends HTMLElement>(
   props: Props
 ): ReturnType<RefElement> => {
-  const ref = React.useRef<RefElement>(null);
-
   const { autoFocus, eventListeners } = props;
-  React.useEffect(() => {
-    const handlers: Handler[] = [];
-    const element = ref.current;
-    if (element instanceof Element) {
+  const refCallback: React.RefCallback<RefElement> = React.useCallback(
+    (element) => {
+      const handlers: Handler[] = [];
       eventListeners.forEach(({ keys, eventListener }) => {
         const eventHandler = (event: KeyboardEvent) => {
           if (keys.includes(event.key)) {
@@ -27,21 +24,20 @@ export const useHotkeys = <RefElement extends HTMLElement>(
           }
         };
         handlers.push(eventHandler);
-        element.addEventListener("keydown", eventHandler);
+        element?.addEventListener("keydown", eventHandler);
       });
-    }
 
-    if (autoFocus && element instanceof HTMLElement) {
-      element.focus();
-    }
-
-    return () => {
-      if (element instanceof Element) {
-        handlers.forEach((handler) => {
-          element.addEventListener("keydown", handler);
-        });
+      if (autoFocus) {
+        element?.focus();
       }
-    };
-  }, [autoFocus, eventListeners]);
-  return ref;
+
+      return () => {
+        handlers.forEach((handler) => {
+          element?.removeEventListener("keydown", handler);
+        });
+      };
+    },
+    [autoFocus, eventListeners]
+  );
+  return refCallback;
 };
