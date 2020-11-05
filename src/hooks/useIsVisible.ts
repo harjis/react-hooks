@@ -22,7 +22,7 @@ export const useIsVisible = <
     visibilityRatio: number,
     isIntersectingFromAbove: boolean
   ) => void
-): [RefCallback<RefElement>] => {
+): RefCallback<RefElement> => {
   // | null is needed because we own the ref.
   // More info here: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065#issuecomment-446425911
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -73,5 +73,5 @@ export const useIsVisible = <
     },
     [onVisibilityChange, scrollRef]
   );
-  return [observerCallback];
+  return observerCallback;
 };
