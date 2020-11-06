@@ -15,7 +15,7 @@ export type RefCallbackWithCleanup<RefElement extends HTMLElement> = (
  * The idea of this hook is to generalize cleanup for RefCallback.
  * By default React.RefCallback doesn't support cleanup.
  * */
-export function useEffectRef<RefElement extends HTMLElement>(
+export function useRefCallbackWithCleanup<RefElement extends HTMLElement>(
   callback: RefCallbackWithCleanup<RefElement>
 ): EffectRef<RefElement> {
   const disposeRef = React.useRef<Cleanup>(noop);

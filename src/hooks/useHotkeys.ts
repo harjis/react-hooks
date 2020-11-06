@@ -1,5 +1,8 @@
 import React from "react";
-import { RefCallbackWithCleanup, useEffectRef } from "./useEffectRef";
+import {
+  RefCallbackWithCleanup,
+  useRefCallbackWithCleanup,
+} from "./useRefCallbackWithCleanup";
 
 export type EventListener = {
   keys: string[];
@@ -40,5 +43,5 @@ export const useHotkeys = <RefElement extends HTMLElement>(
     },
     [autoFocus, eventListeners]
   );
-  return useEffectRef<RefElement>(refCallback);
+  return useRefCallbackWithCleanup<RefElement>(refCallback);
 };

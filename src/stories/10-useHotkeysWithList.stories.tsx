@@ -23,9 +23,10 @@ const HotkeysWithList = () => {
     scrollIntoView
   );
 
-  const ref = useHotkeys({
-    autoFocus: true,
-    eventListeners: [
+  // useMemo so that useHotkeys refCallback doesn't cleanup on
+  // every render
+  const eventListeners = React.useMemo(
+    () => [
       {
         keys: ["ArrowUp", "ArrowDown"],
         eventListener: (event: KeyboardEvent) => {
@@ -37,6 +38,11 @@ const HotkeysWithList = () => {
         },
       },
     ],
+    []
+  );
+  const ref = useHotkeys({
+    autoFocus: true,
+    eventListeners,
   });
   return (
     <div
