@@ -8,7 +8,7 @@ export default {
 };
 
 const initialState = { counter: 0 };
-export const App: React.FC = () => {
+const App: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(true);
   const counters = Array.from({ length: 5 }, (x, i) => i);
   return (
