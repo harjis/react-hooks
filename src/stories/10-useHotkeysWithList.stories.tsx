@@ -49,18 +49,21 @@ const HotkeysWithList = () => {
       style={{
         display: "flex",
         justifyContent: "space-between",
-        width: 250,
+        width: 500,
       }}
     >
       <div
         ref={ref}
         tabIndex={0}
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{ display: "flex", flexDirection: "column", width: 200 }}
       >
-        Press Up and Down arrow keys!
+        Make sure focus is here and then: Press Up and Down arrow keys!
         <div>Selected: {selectedItem}</div>
       </div>
-      <div ref={scrollRef} style={{ height: 100, overflow: "scroll" }}>
+      <div
+        ref={scrollRef}
+        style={{ height: 100, overflow: "scroll", flexGrow: 1 }}
+      >
         <List ref={refCallback} items={items} selectedItem={selectedItem} />
       </div>
     </div>
