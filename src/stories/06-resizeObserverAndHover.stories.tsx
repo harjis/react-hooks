@@ -2,6 +2,7 @@ import React from "react";
 
 import useResizeObserver from "../hooks/useResizeObserver";
 import useHover from "../hooks/useHover";
+import { mergeRefs } from "../utils/mergeRefs";
 
 export default {
   title: "ResizeObserver & Hover",
@@ -35,11 +36,3 @@ export const UseResizeObserverAndHover = () => {
 };
 
 UseResizeObserverAndHover.story = { name: "useResizeObserver & useHover" };
-
-function mergeRefs<ElementType>(refs: React.MutableRefObject<ElementType>[]) {
-  return (instance: ElementType) => {
-    refs.forEach((ref) => {
-      ref.current = instance;
-    });
-  };
-}
