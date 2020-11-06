@@ -7,16 +7,17 @@ export default {
   title: "useHotkeys",
 };
 
-const eventListeners: EventListener[] = [
-  {
-    keys: ["a", "b"],
-    eventListener: (event: KeyboardEvent) => {
-      console.log(event);
-    },
-  },
-];
 const Hotkeys: React.FC = () => {
+  const [keyPresses, setKeyPress] = React.useState<string[]>([]);
   const [isMounted, setIsMounted] = React.useState(true);
+  const eventListeners: EventListener[] = [
+    {
+      keys: ["a", "b"],
+      eventListener: (event: KeyboardEvent) => {
+        setKeyPress((prevState) => prevState.concat(event.key));
+      },
+    },
+  ];
   const ref = useHotkeys<HTMLDivElement>({ autoFocus: true, eventListeners });
 
   return (
@@ -37,6 +38,11 @@ const Hotkeys: React.FC = () => {
           Press A or B
         </div>
       )}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {keyPresses.map((keyPress) => (
+          <div>{`${keyPress.toUpperCase()} pressed!`}</div>
+        ))}
+      </div>
     </div>
   );
 };
