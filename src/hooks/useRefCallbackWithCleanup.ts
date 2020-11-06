@@ -4,7 +4,7 @@ type Cleanup = () => void;
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop: Cleanup = () => {};
 
-type EffectRef<RefElement extends HTMLElement> = (
+type RefCallbackWithoutCleanup<RefElement extends HTMLElement> = (
   element: RefElement | null
 ) => void;
 export type RefCallbackWithCleanup<RefElement extends HTMLElement> = (
@@ -17,16 +17,16 @@ export type RefCallbackWithCleanup<RefElement extends HTMLElement> = (
  * */
 export function useRefCallbackWithCleanup<RefElement extends HTMLElement>(
   callback: RefCallbackWithCleanup<RefElement>
-): EffectRef<RefElement> {
-  const disposeRef = React.useRef<Cleanup>(noop);
+): RefCallbackWithoutCleanup<RefElement> {
+  const cleanUpRef = React.useRef<Cleanup>(noop);
   return React.useCallback(
     (element: RefElement | null) => {
-      disposeRef.current();
-      // To ensure every dispose function is called only once.
-      disposeRef.current = noop;
+      cleanUpRef.current();
+      // So that every cleanup is called only once
+      cleanUpRef.current = noop;
 
       if (element) {
-        disposeRef.current = callback(element);
+        cleanUpRef.current = callback(element);
       }
     },
     [callback]
