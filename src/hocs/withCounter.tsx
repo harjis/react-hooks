@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Subtract } from "utility-types";
-
 export type InjectedProps = {
   counter: number;
   inc: () => void;
@@ -14,7 +12,7 @@ const withCounter = <P extends InjectedProps>(
   Component: React.ComponentType<P>
 ) =>
   class WithCounterHoc extends React.Component<
-    Subtract<P, InjectedProps>,
+    Omit<P, keyof InjectedProps>,
     State
   > {
     state = {
