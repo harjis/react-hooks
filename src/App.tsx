@@ -1,60 +1,40 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { useAsyncResource, DataOrModifiedFn } from "use-async-resource";
 
-import { useSnapshotStore } from "./hooks/useSnapshotStore";
+type User = {
+  name: string;
+};
+type Props = {
+  userReader: DataOrModifiedFn<User>;
+};
+function ProfileDetails({ userReader }: Props) {
+  // Try to read user info, although it might not have loaded yet
+  const user = userReader();
+  return <h1>{user.name}</h1>;
+}
 
-const initialState = { counter: 0 };
-const App: React.FC = () => {
-  const [isMounted, setIsMounted] = React.useState(true);
-  const counters = Array.from({ length: 5 }, (x, i) => i);
+const App = () => {
+  const [userReader, getNewUser] = useAsyncResource(fetchUser, []);
+  console.log("wat");
   return (
     <div>
-      <div>
-        <button
-          onClick={() => {
-            setIsMounted((prevState) => !prevState);
-          }}
-        >
-          {isMounted ? "Click to unmount" : "Click to mount"}
-        </button>
-      </div>
-
-      {isMounted &&
-        counters.map((counter) => <Counter key={counter} id={counter} />)}
+      <Suspense fallback={<h1>Loading profile...</h1>}>
+        <ProfileDetails userReader={userReader} />
+      </Suspense>
     </div>
   );
 };
 
-export default App;
-
-function Counter(props: { id: number }) {
-  const { save, remove, state } = useSnapshotStore({
-    initialState,
-    localStorageKey: "my-storage-" + props.id,
+function fetchUser(): Promise<{ name: string }> {
+  console.log("fetch user...");
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("fetched user");
+      resolve({
+        name: "Ringo Starr",
+      });
+    }, 1000);
   });
-
-  const [counter, setCounter] = React.useState(state);
-  const inc = () =>
-    setCounter((prevState) => ({
-      ...prevState,
-      counter: prevState.counter + 1,
-    }));
-
-  const dec = () =>
-    setCounter((prevState) => ({
-      ...prevState,
-      counter: prevState.counter - 1,
-    }));
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div>
-        <button onClick={inc}>+</button>
-        <button onClick={dec}>-</button>
-        <button onClick={() => save(counter)}>Save to store</button>
-        <button onClick={() => remove()}>Remove from store</button>
-      </div>
-      <div>
-        counter: {counter.counter} persistedState: {state.counter}
-      </div>
-    </div>
-  );
 }
+
+export default App;
