@@ -11,12 +11,10 @@ export class CommonErrorBoundary extends React.Component<Props, State> {
   state: State = { hasError: false, error: "" };
 
   static getDerivedStateFromError(error: Error) {
-    console.log(error.message);
     return { hasError: true, error: error.message };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log or store the error
     // console.log(error, errorInfo);
   }
 
