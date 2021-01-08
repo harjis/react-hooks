@@ -11,10 +11,12 @@ type Props = {
   onDrag?: (coordinates: Coordinates) => void;
   onStopDrag?: (coordinates: Coordinates) => void;
 };
+// stopDrag is not in Return payload on purpose. We should attach stopping to window so that if user
+// releases the button while the dragged element is under some other element it should still stop
+// the drag
 type Return = {
   coordinates: Coordinates;
   startDrag: (event: React.MouseEvent) => void;
-  stopDrag: () => void;
 };
 export const useDraggable = (props: Props): Return => {
   const [coordinates, setCoordinates] = useState<Coordinates>(
@@ -52,10 +54,10 @@ export const useDraggable = (props: Props): Return => {
   );
 
   useWindowEventListener("mousemove", drag);
+  useWindowEventListener("mouseup", stopDrag);
 
   return {
     coordinates,
     startDrag,
-    stopDrag,
   };
 };

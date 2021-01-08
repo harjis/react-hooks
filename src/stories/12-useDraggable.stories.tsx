@@ -17,7 +17,7 @@ type Props = {
 };
 const Rectangle: React.FC<Props> = (props) => {
   const { id, ...initialCoordinates } = props.rectangle;
-  const { coordinates, startDrag, stopDrag } = useDraggable({
+  const { coordinates, startDrag } = useDraggable({
     coordinates: initialCoordinates,
   });
   return (
@@ -34,7 +34,6 @@ const Rectangle: React.FC<Props> = (props) => {
         left: coordinates.x,
       }}
       onMouseDown={startDrag}
-      onMouseUp={stopDrag}
     >
       Drag me!
     </div>
