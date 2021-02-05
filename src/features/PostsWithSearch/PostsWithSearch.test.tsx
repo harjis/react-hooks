@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 
 import { fakeHttpLib } from "../../api/fakeHttpLib";
 import { PostsWithSearch } from ".";
@@ -34,9 +34,7 @@ describe("PostsWithSearch", () => {
       const { getByPlaceholderText, getAllByText } = render(
         <PostsWithSearch />
       );
-      act(() => {
-        userEvent.type(getByPlaceholderText("Search"), "3");
-      });
+      userEvent.type(getByPlaceholderText("Search"), "3");
 
       await waitFor(() => {
         const items = getAllByText(/Mocked Post/);
@@ -51,18 +49,14 @@ describe("PostsWithSearch", () => {
       const { getByPlaceholderText, getAllByText } = render(
         <PostsWithSearch />
       );
-      act(() => {
-        userEvent.type(getByPlaceholderText("Search"), "3");
-      });
+      userEvent.type(getByPlaceholderText("Search"), "3");
 
       await waitFor(() => {
         const items = getAllByText(/Mocked Post/);
         expect(items.length).toEqual(1);
       });
 
-      act(() => {
-        userEvent.clear(getByPlaceholderText("Search"));
-      });
+      userEvent.clear(getByPlaceholderText("Search"));
 
       await waitFor(() => {
         const items = getAllByText(/Mocked Post/);
