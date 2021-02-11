@@ -15,7 +15,7 @@ const UseEventListener = () => {
     [setCoords]
   );
 
-  useDocumentEventListener("abort", handler);
+  useDocumentEventListener("mousemove", handler);
 
   return (
     <h1>

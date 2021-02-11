@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import { useDocumentEventListener } from "./useDocumentEventListener";
+import { useEvent } from "react-use";
 
 type Coordinates = {
   x: number;
@@ -54,8 +55,8 @@ export const useDraggable = (props: Props): Return => {
     [nodeOffset, props]
   );
 
-  useDocumentEventListener("mousemove", drag);
-  useDocumentEventListener("mouseup", stopDrag);
+  useEvent("mousemove", drag);
+  useEvent("mouseup", stopDrag);
 
   return {
     coordinates,
