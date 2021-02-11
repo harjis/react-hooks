@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Story } from "@storybook/react";
-import { useWindowEventListener } from "../hooks/useWindowEventListener";
+import { useDocumentEventListener } from "../hooks/useDocumentEventListener";
 
 export default {
-  title: "useEventListener",
+  title: "useDocumentEventListener",
 };
 
 const UseEventListener = () => {
@@ -15,7 +15,7 @@ const UseEventListener = () => {
     [setCoords]
   );
 
-  useWindowEventListener("mousemove", handler);
+  useDocumentEventListener("abort", handler);
 
   return (
     <h1>

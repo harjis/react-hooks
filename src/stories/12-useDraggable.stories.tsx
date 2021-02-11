@@ -45,6 +45,7 @@ const UseDraggable = () => {
     { id: 1, x: 100, y: 100 },
     { id: 2, x: 400, y: 500 },
   ];
+  const [isMounted, setIsMounted] = React.useState(true);
 
   return (
     <div
@@ -54,9 +55,17 @@ const UseDraggable = () => {
         background: "lightblue",
       }}
     >
-      {rectangles.map((rectangle) => (
-        <Rectangle key={rectangle.id} rectangle={rectangle} />
-      ))}
+      <button
+        onClick={() => {
+          setIsMounted(!isMounted);
+        }}
+      >
+        Toggle mount
+      </button>
+      {isMounted &&
+        rectangles.map((rectangle) => (
+          <Rectangle key={rectangle.id} rectangle={rectangle} />
+        ))}
     </div>
   );
 };

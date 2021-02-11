@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 
-import { useWindowEventListener } from "./useWindowEventListener";
+import { useDocumentEventListener } from "./useDocumentEventListener";
 
 type Coordinates = {
   x: number;
@@ -35,6 +35,7 @@ export const useDraggable = (props: Props): Return => {
 
   const drag = useCallback(
     (event: MouseEvent) => {
+      console.log("drag");
       if (nodeOffset === null) {
         return;
       }
@@ -53,8 +54,8 @@ export const useDraggable = (props: Props): Return => {
     [nodeOffset, props]
   );
 
-  useWindowEventListener("mousemove", drag);
-  useWindowEventListener("mouseup", stopDrag);
+  useDocumentEventListener("mousemove", drag);
+  useDocumentEventListener("mouseup", stopDrag);
 
   return {
     coordinates,
