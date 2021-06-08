@@ -1,8 +1,10 @@
 export function scrollIntoView<ElementType extends Element>(
   element: ElementType,
   visibilityRatio: number,
-  isIntersectingFromAbove: boolean
+  isIntersectingFromAbove: boolean,
+  hasScrolled: boolean
 ): void {
+  if (hasScrolled) return;
   if (visibilityRatio < 1 && element && isIntersectingFromAbove) {
     // scrollIntoView(alignToTop)
     element.scrollIntoView(true);

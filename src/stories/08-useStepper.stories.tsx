@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import List from "../components/List";
 import { useIsVisible } from "../hooks/useIsVisible";
 import { scrollIntoView } from "../utils/scrollIntoView";
+import { useHasScrolled } from "../hooks/useHasScrolled";
+import { mergeRefs } from "../utils/mergeRefs";
 
 export default {
   title: "Stepper",
@@ -14,10 +16,25 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollRef2, hasScrolled, resetHasScrolled] = useHasScrolled<
+    HTMLDivElement
+  >();
+  const scrollIntoView2 = useCallback(
+    (element, visibilityRatio, isIntersectingFromAbove) => {
+      scrollIntoView(
+        element,
+        visibilityRatio,
+        isIntersectingFromAbove,
+        hasScrolled
+      );
+    },
+    [hasScrolled]
+  );
   const refCallback = useIsVisible<HTMLDivElement, HTMLDivElement>(
     scrollRef,
-    scrollIntoView
+    scrollIntoView2
   );
+
   return (
     <div
       style={{
@@ -31,6 +48,7 @@ export const Stepper = () => {
           <button
             onClick={() => {
               setSelectedItem((prevState) => prevState + 1);
+              resetHasScrolled();
             }}
           >
             +
@@ -38,6 +56,7 @@ export const Stepper = () => {
           <button
             onClick={() => {
               setSelectedItem((prevState) => prevState - 1);
+              resetHasScrolled();
             }}
           >
             -
@@ -45,7 +64,10 @@ export const Stepper = () => {
         </div>
         <div>Selected: {selectedItem}</div>
       </div>
-      <div ref={scrollRef} style={{ height: 100, overflow: "scroll" }}>
+      <div
+        ref={mergeRefs([scrollRef, scrollRef2])}
+        style={{ height: 100, overflow: "scroll" }}
+      >
         <List ref={refCallback} items={items} selectedItem={selectedItem} />
       </div>
     </div>
