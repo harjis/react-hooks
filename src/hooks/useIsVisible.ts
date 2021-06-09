@@ -90,8 +90,9 @@ export const useIsVisible = <
   const rootRefCallback: RefCallback<ScrollRefElement> = useCallback(
     (rootNode) => {
       rootRef.current = rootNode;
+      init();
     },
-    []
+    [init]
   );
   return [nodeRefCallback, rootRefCallback];
 };

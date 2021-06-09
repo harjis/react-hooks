@@ -36,7 +36,7 @@ export const UseIsVisible = () => {
               lineHeight: "100px",
             }}
           >
-            Scroll me
+            Should see console log immediately
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@ export const UseIsVisibleTopMargin = () => {
     []
   );
   const [refCallback, rootRef] = useIsVisible(onVisibilityChange, {
-    rootMargin: "10px 0px 0px 0px",
+    rootMargin: "50px 0px 0px 0px",
   });
 
   return (
@@ -81,7 +81,7 @@ export const UseIsVisibleTopMargin = () => {
               lineHeight: "100px",
             }}
           >
-            Scroll me
+            Should see console log when 50% is hidden
           </div>
         </div>
       </div>
