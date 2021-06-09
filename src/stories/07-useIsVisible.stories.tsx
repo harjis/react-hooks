@@ -102,7 +102,7 @@ export const UseIsVisibleLeftMargin = () => {
   );
   const greenElementWidth = 100;
   const [refCallback, rootRef] = useIsVisible(onVisibilityChange, {
-    rootMargin: `0px 0px 0px -${greenElementWidth - 1}px`,
+    rootMargin: `0px 0px 0px -${greenElementWidth}px`,
     threshold: 1,
   });
 
