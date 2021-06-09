@@ -12,10 +12,8 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const secondScrollRef = useRef<HTMLDivElement>(null);
-  const refCallback = useIsVisible<HTMLDivElement, HTMLDivElement>(
-    scrollRef,
+  const [refCallback, scrollRef] = useIsVisible<HTMLDivElement, HTMLDivElement>(
     (element, visibilityRatio, isAbove) =>
       handleVisibilityChange(
         element,

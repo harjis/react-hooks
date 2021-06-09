@@ -15,7 +15,6 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRef2, hasScrolled, resetHasScrolled] = useHasScrolled<
     HTMLDivElement
   >();
@@ -30,10 +29,10 @@ export const Stepper = () => {
     },
     [hasScrolled]
   );
-  const refCallback = useIsVisible<HTMLDivElement, HTMLDivElement>(
-    scrollRef,
-    scrollIntoView2
-  );
+  const [refCallback, scrollRefCallback] = useIsVisible<
+    HTMLDivElement,
+    HTMLDivElement
+  >(scrollIntoView2);
 
   return (
     <div
@@ -65,7 +64,7 @@ export const Stepper = () => {
         <div>Selected: {selectedItem}</div>
       </div>
       <div
-        ref={mergeRefs([scrollRef, scrollRef2])}
+        ref={mergeRefs([scrollRefCallback, scrollRef2])}
         style={{ height: 100, overflow: "scroll" }}
       >
         <List ref={refCallback} items={items} selectedItem={selectedItem} />
