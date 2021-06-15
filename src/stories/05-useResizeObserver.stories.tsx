@@ -75,3 +75,45 @@ export const WithPadding = () => {
   );
 };
 WithPadding.story = { name: "with padding" };
+
+export const ChangingRef = () => {
+  const [firstDiv, setFirstDiv] = React.useState(true);
+  const [ref, dimensions] = useResizeObserver<HTMLDivElement>();
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setFirstDiv((prevState) => !prevState);
+        }}
+      >
+        Toggle between divs
+      </button>
+      {firstDiv && (
+        <div
+          style={{
+            height: 100,
+            width: 100,
+            backgroundColor: "aliceblue",
+          }}
+          ref={ref}
+        >
+          height: {dimensions.height} width: {dimensions.width}
+        </div>
+      )}
+
+      {!firstDiv && (
+        <div
+          style={{
+            height: 200,
+            width: 200,
+            backgroundColor: "pink",
+          }}
+          ref={ref}
+        >
+          height: {dimensions.height} width: {dimensions.width}
+        </div>
+      )}
+    </div>
+  );
+};
+ChangingRef.story = { name: "with changing ref" };
