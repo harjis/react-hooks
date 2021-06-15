@@ -44,3 +44,34 @@ export const UseResizeObserver = () => {
 };
 
 UseResizeObserver.story = { name: "useResizeObserver" };
+
+export const WithPadding = () => {
+  const [size, setSize] = React.useState({ height: 100, width: 100 });
+  const [ref, dimensions] = useResizeObserver<HTMLDivElement>();
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setSize((prevState) => ({
+            height: prevState.height + 100,
+            width: prevState.width + 100,
+          }));
+        }}
+      >
+        Increase div size
+      </button>
+      <div
+        style={{
+          height: size.height,
+          width: size.width,
+          padding: "20px",
+          backgroundColor: "aliceblue",
+        }}
+        ref={ref}
+      >
+        height: {dimensions.height} width: {dimensions.width}
+      </div>
+    </div>
+  );
+};
+WithPadding.story = { name: "with padding" };
