@@ -22,11 +22,21 @@ export const UseResizeObserver = () => {
       >
         Increase div size
       </button>
-      <div style={{ height: size.height, width: size.width }} ref={ref}>
+      <div
+        style={{
+          height: size.height,
+          width: size.width,
+          backgroundColor: "aliceblue",
+        }}
+        ref={ref}
+      >
         height: {dimensions.height} width: {dimensions.width}
       </div>
 
-      <div style={{ height: 200, width: 250 }} ref={ref2}>
+      <div
+        style={{ height: 200, width: 250, backgroundColor: "pink" }}
+        ref={ref2}
+      >
         height: {dimensions2.height} width: {dimensions2.width}
       </div>
     </div>
