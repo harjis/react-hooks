@@ -9,7 +9,6 @@ export default {
 export const CounterWithComponent = () => {
   return (
     <div>
-        test
       <CounterCaaf>
         {({ counter, inc, dec }) => (
           <>
