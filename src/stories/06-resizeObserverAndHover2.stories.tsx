@@ -4,7 +4,7 @@ import useResizeObserver from "../hooks/useResizeObserver";
 import useHover2 from "./06-useHoverImplementation";
 
 export default {
-  title: "ResizeObserver & Hover 2",
+  title: "ResizeObserver & Hover 2 (disabled)",
 };
 
 // The code here is commented out on purpose. When this story was written useResizeObserver
@@ -13,7 +13,7 @@ export default {
 // because it has the ability to react on ref changes. That change has broken this story
 // and to my understanding this can not be solved since we can't easily access the element
 // inside useHover2 when RefCallback is used
-export const UseResizeObserverAndHover = () => {
+const UseResizeObserverAndHover = () => {
   const [size, setSize] = React.useState({ height: 100, width: 100 });
   const [ref, dimensions] = useResizeObserver<HTMLDivElement>();
   // Can't pass ref anymore
@@ -39,7 +39,7 @@ export const UseResizeObserverAndHover = () => {
   );
 };
 
-const Temp = () => {
+export const Temp = () => {
   return (
     <div>Check the story file comments on why this story has been disabled</div>
   );
