@@ -15,17 +15,12 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 
 export const Stepper = () => {
   const [selectedItem, setSelectedItem] = useState(0);
-  const [scrollRef2, hasScrolled, resetHasScrolled] = useHasScrolled<
-    HTMLDivElement
-  >();
+  const [scrollRef2, hasScrolled, resetHasScrolled] =
+    useHasScrolled<HTMLDivElement>();
   const scrollIntoView2 = useCallback(
     (element, visibilityRatio, isIntersectingFromAbove) => {
-      scrollIntoView(
-        element,
-        visibilityRatio,
-        isIntersectingFromAbove,
-        hasScrolled
-      );
+      if (hasScrolled) return;
+      scrollIntoView(element, visibilityRatio, isIntersectingFromAbove);
     },
     [hasScrolled]
   );

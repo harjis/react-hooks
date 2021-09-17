@@ -17,11 +17,7 @@ const items = Array.from({ length: 20 }, (x, index) => ({
 const HotkeysWithList = () => {
   const [selectedItem, setSelectedItem] = useState(0);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const refCallback = useIsVisible<HTMLDivElement, HTMLDivElement>(
-    scrollRef,
-    scrollIntoView
-  );
+  const [refCallback, scrollRef] = useIsVisible(scrollIntoView);
 
   // useMemo so that useHotkeys refCallback doesn't cleanup on
   // every render
