@@ -6,56 +6,55 @@ type Dimensions = {
   width: number;
 };
 type ReturnType<ElementType> = [React.Ref<ElementType>, Dimensions];
-const useResizeObserver = <ElementType extends Element>(): ReturnType<
-  ElementType
-> => {
+
+const useResizeObserver = <
+  ElementType extends Element
+>(): ReturnType<ElementType> => {
   const observerRef = useRef<ResizeObserver | null>(null);
   const [dimensions, setDimensions] = React.useState({ height: 0, width: 0 });
   const elementRef = React.useRef<ElementType | null>(null);
 
   const unobserve = useCallback(() => {
-    observerRef.current?.disconnect();
-    observerRef.current = null;
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
   }, []);
 
   const observe = useCallback(() => {
-    const { current } = elementRef;
-    if (current) {
-      observerRef.current = new ResizeObserver(([element]) => {
-        // https://alligator.io/js/resize-observer/
-        // Unlike with an element’s getBoundingClientRect, contentRect’s values for width and height don’t
-        // include padding values. contentRect.top is the element’s top padding
-        // and contentRect.left is the element’s left padding.
-        const width = element.contentRect.left + element.contentRect.right;
-        const height = element.contentRect.top + element.contentRect.bottom;
+    if (elementRef.current) {
+      observerRef.current = new ResizeObserver(([entry]) => {
+        const { contentRect } = entry;
+        const width = contentRect.left + contentRect.right;
+        const height = contentRect.top + contentRect.bottom;
 
         setDimensions({ height, width });
       });
-
-      observerRef.current?.observe(current);
+      observerRef.current.observe(elementRef.current);
     }
   }, []);
 
   useEffect(() => {
-    return (): void => {
+    observe();
+    return () => {
       unobserve();
     };
-  }, [unobserve]);
-
-  const init = useCallback(() => {
-    unobserve();
-    observe();
   }, [observe, unobserve]);
 
-  const elementRefCallBack = useCallback(
-    (node) => {
+  const setRef = useCallback(
+    (node: ElementType | null) => {
+      if (elementRef.current) {
+        unobserve();
+      }
       elementRef.current = node;
-      init();
+      if (node) {
+        observe();
+      }
     },
-    [init]
+    [observe, unobserve]
   );
 
-  return [elementRefCallBack, dimensions];
+  return [setRef, dimensions];
 };
 
 export default useResizeObserver;
